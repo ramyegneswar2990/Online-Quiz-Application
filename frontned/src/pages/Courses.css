@@ -1,0 +1,82 @@
+/* Apply background to the entire screen */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #ffe6f2, #fff); /* Light pink to white gradient */
+    font-family: Arial, sans-serif;
+}
+
+/* Ensure courses container takes full height */
+.courses-container {
+    padding: 20px;
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+/* Heading styling */
+h1 {
+    color: #1e96fc;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    padding-bottom: 5px;
+}
+
+/* Grid Layout for Courses */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Styling for Course Boxes */
+.course-box {
+    background: linear-gradient(to bottom,);
+    color: black;
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    width: 300px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 3px solid #a6e1fa;
+}
+
+/* Icon Styling */
+.course-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+/* Description Styling */
+.course-box p {
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 5px;
+}
+
+/* Hover Effect */
+.course-box:hover {
+    background: linear-gradient(to bottom,#f2f2f2,lightblue );
+    transform: scale(1.05);
+    box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.2);
+    border-color: #a6e1fa;
+}

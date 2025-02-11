@@ -1,0 +1,58 @@
+/* UserDashboard.css */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: #fff;
+  padding-top: 20px;
+  position: fixed;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Align items vertically */
+}
+
+.logout-button {
+  width: 100%;
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  font-size: 25px; /* Match the font size with nav links */
+  margin-bottom: 10px; /* Add space below the logout button */
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Allow the nav list to take remaining space */
+}
+
+.nav-item {
+  padding: 15px 20px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  font-size: 25px;
+}
+
+.nav-link:hover {
+  background-color: #444;
+}
+
+.main-content {
+  margin-left: 250px; /* Adjust based on sidebar width */
+  padding: 20px;
+  background-color: #f0f0f0;
+  flex-grow: 1;
+}
