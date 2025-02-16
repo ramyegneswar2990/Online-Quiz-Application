@@ -30,6 +30,7 @@ const UserLogin = () => {
         <input type="password" name="fakepasswordremembered" style={{ display: 'none' }} />
 
         <h2>User Login</h2>
+
         <input
           type="email"
           placeholder="Email"
@@ -40,6 +41,7 @@ const UserLogin = () => {
           readOnly
           onFocus={(e) => e.target.removeAttribute('readOnly')}
         />
+        
         <input
           type="password"
           placeholder="Password"
@@ -50,7 +52,9 @@ const UserLogin = () => {
           readOnly
           onFocus={(e) => e.target.removeAttribute('readOnly')}
         />
+        
         <button type="submit">Login</button>
+        
         <p>
           Don't have an account?{" "}
           <Link to="/UserRegistration">Click to Register here</Link>
