@@ -1,22 +1,27 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const connectDB = require("./config/db");
+const connectDB = require("./config/db"); // Ensure your DB connection is set up
+const { errorHandler, notFound } = require("./middlewares/errorMiddleware");
+const { authMiddleware, adminMiddleware } = require("./middlewares/authMiddleware");
+const corsMiddleware = require("./middlewares/corsMiddleware");
 
 dotenv.config();
 connectDB();
 
 const app = express();
+
+// Middleware
 app.use(express.json());
+app.use(corsMiddleware);
 
-app.get("/", (req, res) => {
-    res.send("API is running...");
-});
+// Routes (Import them when ready)
+app.use("/api/auth", require("./routes/authRoutes")); 
+// app.use("/api/courses",require("./routes/courseRoutes"));
+// app.use("/api/quiz", require("./routes/quizRoutes"));
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send("Something broke!");
-});
+// Error Handling Middleware
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
