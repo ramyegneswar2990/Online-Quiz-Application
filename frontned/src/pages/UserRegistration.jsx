@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { registerUser } from "../services/api";
 import "./UserRegistration.css"; // Ensure this CSS file exists
 
 const UserRegistration = () => {
