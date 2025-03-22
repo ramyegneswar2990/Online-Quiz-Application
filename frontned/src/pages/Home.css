@@ -1,0 +1,125 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  /* Fullscreen Background */
+  .home-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Soft White Gradient */
+  }
+  
+  /* Minimalistic Card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+    color: #333; /* Dark Gray */
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  /* Heading */
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #555; /* Soft Dark Gray */
+  }
+  
+  /* Description */
+  p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-bottom: 20px;
+    color: #666; /* Medium Gray */
+  }
+  
+  /* Buttons */
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .btn {
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+    position: relative;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  
+  /* User Button */
+  .user-btn {
+    background: #fff;
+    color: #333;
+    border-color: #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-btn:hover {
+    background: #f1f1f1;
+    transform: scale(1.05);
+  }
+  
+  /* Admin Button */
+  .admin-btn {
+    background: #f8f9fa;
+    color: #333;
+    border-color: #ccc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-btn:hover {
+    background: #e9ecef;
+    transform: scale(1.05);
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .glass-card {
+      padding: 30px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  
+    p {
+      font-size: 1rem;
+    }
+  
+    .btn {
+      padding: 10px 20px;
+    }
+  }
+  

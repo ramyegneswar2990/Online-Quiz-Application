@@ -1,67 +1,46 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
-import "./UserLogin.css";
+import { loginUser } from "../services/api";
+import { useNavigate, Link } from "react-router-dom"; // Import Link
+import "./Userlogin.css";
 
 const UserLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+    const [formData, setFormData] = useState({ email: "", password: "" });
+    const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/user-login", { email, password });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", "user");
-      setEmail("");
-      setPassword("");
-      navigate("/UserDashboard");
-    } catch (err) {
-      alert("Invalid credentials");
-    }
-  };
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-  return (
-    <div className="container">
-      <form className="login-form" onSubmit={handleLogin} autoComplete="off">
-        {/* Hidden dummy inputs to prevent autofill */}
-        <input type="text" name="fakeusernameremembered" style={{ display: 'none' }} />
-        <input type="password" name="fakepasswordremembered" style={{ display: 'none' }} />
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await loginUser({ ...formData, action: "login", role: "user" });
+            alert("User Logged In Successfully");
+            navigate("/dashboard"); // Redirect to dashboard after successful login
+        } catch (error) {
+            console.error("Login failed", error);
+        }
+    };
 
-        <h2>User Login</h2>
-
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          autoComplete="off"
-          readOnly
-          onFocus={(e) => e.target.removeAttribute('readOnly')}
-        />
-        
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          autoComplete="new-password"
-          readOnly
-          onFocus={(e) => e.target.removeAttribute('readOnly')}
-        />
-        
-        <button type="submit">Login</button>
-        
-        <p>
-          Don't have an account?{" "}
-          <Link to="/UserRegistration">Click to Register here</Link>
-        </p>
-      </form>
-    </div>
-  );
+    return (
+        <div className="user-login-container">
+            <h2>User Login</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="input-group">
+                    <label>Email:</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                </div>
+                <div className="input-group">
+                    <label>Password:</label>
+                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                </div>
+                <button type="submit" className="submit-btn">Login</button>
+            </form>
+            <p className="switch-auth">
+                Don't have an account? <Link to="/UserRegistration">Register</Link>
+            </p>
+        </div>
+    );
 };
 
 export default UserLogin;

@@ -1,101 +1,72 @@
-/* Centering the form on the page */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
-    padding: 20px;
-  }
-  
-  /* Form styling */
-  .registration-form {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
-  
-  /* Input fields */
-  input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: border 0.3s ease-in-out;
-  }
-  
-  input:focus {
-    border-color: #2c3e50;
-    outline: none;
-  }
-  
-  /* Register button */
-  button {
-    width: 100%;
-    padding: 12px;
-    background-color: #2c3e50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-  }
-  
-  button:hover {
-    background-color: #34495e;
-  }
-  
-  /* Login link */
-  p {
-    margin-top: 15px;
-    font-size: 0.9rem;
-  }
-  
-  p a {
-    color: #2c3e50;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  p a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Fade-in animation */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 480px) {
-    .registration-form {
-      padding: 20px;
-    }
-  
-    h2 {
-      font-size: 1.5rem;
-    }
-  }
-  
+.admin-register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full screen height */
+  width: 100vw; /* Full screen width */
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Soft white gradient */
+  color: #333;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+h2 {
+  color: #444;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #444;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #666;
+}
+
+.switch-auth {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.switch-auth a {
+  color: #444;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.switch-auth a:hover {
+  text-decoration: underline;
+}

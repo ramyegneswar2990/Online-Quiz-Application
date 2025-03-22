@@ -1,110 +1,50 @@
 import React, { useState } from "react";
+import { registerUser } from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
-import "./AdminRegistration.css"; // Ensure this CSS file exists
+import "./AdminRegistration.css";
 
 const AdminRegistration = () => {
-  const [admin, setAdmin] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+    const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-  const handleChange = (e) => {
-    setAdmin({ ...admin, [e.target.name]: e.target.value });
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await registerUser({ ...formData, action: "register", role: "admin" });
+            alert("Admin Registered Successfully");
+            navigate("/admin-login"); // Redirect to admin login after registration
+        } catch (error) {
+            console.error("Registration failed", error);
+        }
+    };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-
-    if (admin.password !== admin.confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    try {
-      await axios.post("http://localhost:5000/api/auth/admin-register", {
-        name: admin.name,
-        email: admin.email,
-        password: admin.password,
-      });
-
-      setAdmin({ name: "", email: "", password: "", confirmPassword: "" });
-      navigate("/Adminlogin");
-    } catch (err) {
-      alert("Registration failed. Please try again.");
-    }
-  };
-
-  return (
-    <div className="container">
-      <form className="registration-form" onSubmit={handleRegister} autoComplete="off">
-        <h2>Admin Registration</h2>
-
-        {/* Prevent autofill issues */}
-        <input type="text" name="fakeusernameremembered" style={{ display: 'none' }} />
-        <input type="password" name="fakepasswordremembered" style={{ display: 'none' }} />
-
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={admin.name}
-          onChange={handleChange}
-          required
-          autoComplete="off"
-          readOnly
-          onFocus={(e) => e.target.removeAttribute("readOnly")}
-        />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={admin.email}
-          onChange={handleChange}
-          required
-          autoComplete="off"
-          readOnly
-          onFocus={(e) => e.target.removeAttribute("readOnly")}
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={admin.password}
-          onChange={handleChange}
-          required
-          autoComplete="new-password"
-          readOnly
-          onFocus={(e) => e.target.removeAttribute("readOnly")}
-        />
-
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={admin.confirmPassword}
-          onChange={handleChange}
-          required
-          autoComplete="new-password"
-          readOnly
-          onFocus={(e) => e.target.removeAttribute("readOnly")}
-        />
-
-        <button type="submit">Register</button>
-
-        <p>
-          Already have an account?{" "}
-          <Link to="/Adminlogin">Login here</Link>
-        </p>
-      </form>
-    </div>
-  );
+    return (
+        <div className="admin-register-container">
+            <h2>Admin Registration</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="input-group">
+                    <label>Name:</label>
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+                </div>
+                <div className="input-group">
+                    <label>Email:</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                </div>
+                <div className="input-group">
+                    <label>Password:</label>
+                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                </div>
+                <button type="submit" className="submit-btn">Register</button>
+            </form>
+            <p className="switch-auth">
+                Already have an account? <Link to="/AdminLogin">Login</Link>
+            </p>
+        </div>
+    );
 };
 
 export default AdminRegistration;
