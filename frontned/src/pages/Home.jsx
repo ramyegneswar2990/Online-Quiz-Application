@@ -9,8 +9,15 @@ const Home = () => {
         <h1>Welcome to the Quiz Portal</h1>
         <p>Challenge yourself with exciting quizzes and track your progress!</p>
         <div className="buttons">
-          <Link to="/Userlogin" className="btn user-btn">User Login</Link>
-          <Link to="/Adminlogin" className="btn admin-btn">Admin Login</Link>
+          <Link to="/Userlogin" style={{textDecoration:"none"}}>
+  
+<button>
+   <strong>User Login</strong>
+</button>
+          </Link>
+          <Link to="/Adminlogin" style={{textDecoration:"none"}}><button>
+   <strong>Admin Login</strong>
+</button></Link>
         </div>
       </div>
     </div>

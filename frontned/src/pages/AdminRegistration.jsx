@@ -16,7 +16,7 @@ const AdminRegistration = () => {
         try {
             await registerUser({ ...formData, action: "register", role: "admin" });
             alert("Admin Registered Successfully");
-            navigate("/admin-login"); // Redirect to admin login after registration
+            navigate("/AdminDashboard"); // Redirect to admin login after registration
         } catch (error) {
             console.error("Registration failed", error);
         }

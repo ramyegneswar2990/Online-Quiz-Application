@@ -16,7 +16,7 @@ const UserRegistration = () => {
         try {
             await registerUser({ ...formData, role: "user", action: "register" });
             alert("User Registered Successfully");
-            navigate("/user-login"); // Redirect after successful registration
+            navigate("/Userlogin"); // Redirect after successful registration
         } catch (error) {
             console.error("Registration failed", error);
         }
@@ -24,6 +24,7 @@ const UserRegistration = () => {
 
     return (
         <div className="user-register-container">
+            <div className ="user-registration-box">
             <h2>User Registration</h2>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
@@ -40,7 +41,8 @@ const UserRegistration = () => {
                 </div>
                 <button type="submit" className="submit-btn">Register</button>
             </form>
-            <p className="switch-auth">Already have an account? <a href="/user-login">Login</a></p>
+            <p className="switch-auth">Already have an account? <a href="/UserLogin">Login</a></p>
+            </div>
         </div>
     );
 };

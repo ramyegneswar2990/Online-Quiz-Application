@@ -10,6 +10,7 @@ export const registerUser = async (userData) => {
 // User Login
 export const loginUser = async (loginData) => {
     return await axios.post(`${API_BASE_URL}`, loginData);
+    
 };
 
 // Admin Registration

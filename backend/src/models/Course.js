@@ -1,11 +1,21 @@
- const mongoose =require("mongoose");
+const mongoose = require("mongoose");
 
- const CourseSchema =new mongoose.Schema({
-    title:{ type: String, required: true, unique:true},
-    description:{type:String},
-    createdBy:{ type:mongoose.Schema.Types.ObjectId,ref:"User"}
- },{ timestamps:true});
+const TopicSchema = new mongoose.Schema({
+  id: Number,
+  name: String,
+  questions: [
+    {
+      id: Number,
+      question: String,
+      options: [String],
+      answer: String
+    }
+  ]
+});
 
- module.exports = mongoose.model("Course",CourseSchema);
+const CourseSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  topics: [TopicSchema]
+});
 
- 
+module.exports = mongoose.model("Course", CourseSchema);
