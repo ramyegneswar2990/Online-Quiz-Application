@@ -1,138 +1,155 @@
-/* Apply background to the entire screen */
-html, body {
-  overflow-x: hidden; /* Hides horizontal scrolling */
-  width: 100%;
-}
-
-body, html {
-  height: 100%;
+body {
   margin: 0;
-  padding: 0;
-  background: linear-gradient(to right, #ffe6f2, #fff);
-  font-family: Arial, sans-serif;
-  overflow-x: hidden;
-  display: flex;
-  
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Sidebar (Menu Box) */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(to right, #f7faff, #e8f4fc);
+}
+
+/* Sidebar */
 .sidebar {
-  width: 220px; /* Reduced from 250px to 220px */
-  background-color: #333;
+  width: 220px;
+  background-color: #2c3e50;
   color: #fff;
-  padding-top: 20px;
-  position: fixed;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 20px 10px;
 }
 
-/* Navigation Links */
 .nav-list {
   list-style: none;
-  padding: 10;
-  margin: 10;
+  padding: 0;
+  margin-top: 30px;
 }
 
 .nav-item {
-  padding: 12px 15px; /* Keep the reduced padding */
+  margin-bottom: 20px;
 }
 
 .nav-link {
   color: #fff;
   text-decoration: none;
-  display: block;
-  font-size: 20px;
+  font-size: 18px;
+  transition: color 0.3s;
 }
 
 .nav-link:hover {
-  background-color: #444;
+  color: #00bcd4;
 }
 
-/* Logout Button */
 .logout-button {
-  width: 100%;
-  padding: 12px 15px;
   background: none;
   border: none;
   color: #fff;
   cursor: pointer;
   text-align: left;
-  font-size: 20px;
+  font-size: 18px;
+  margin-top: auto;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.intro-section {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  animation: fadeIn 1s ease;
+}
+
+.intro-section h1 {
+  color: #1f8ef1;
+  font-size: 32px;
   margin-bottom: 10px;
 }
 
-/* Main Content (Reduced Space Between Sidebar & Courses) */
-.main-content {
-  margin-left: 170px; /* Reduced from 230px to 210px */
-  padding: 10px 5px; /* Keep reduced padding */
-  background-color: #f0f0f0;
-  flex-grow: 1;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.highlight-text {
+  color: #e74c3c;
 }
 
-/* Heading Styling */
-h1 {
-  color: #1e96fc;
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 5px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-  padding-bottom: 3px;
-}
-
-/* 📌 Fixed Grid Layout for Courses */
-.courses-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 10px;
-  justify-content: center;
-  width: 100%; /* Remove fixed width */
-  max-width: 1100px; /* Optional: To keep layout controlled */
-  margin: 0 auto; /* Center the grid */
-  padding: 10px;
-}
-
-
-/* Course Box */
-.course-box {
-  background: linear-gradient(to bottom, #ffffff, #e6f7ff);
-  color: black;
-  text-decoration: none;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
+.tagline {
   font-size: 18px;
-  font-weight: bold;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Dashboard Content */
+.dashboard-content {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  height: 160px;
-  width: 250px;
-  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
-  border: 2px solid #a6e1fa;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
-/* Prevent Grid from Breaking on Smaller Screens */
-@media (max-width: 1100px) {
-  .courses-grid {
-      grid-template-columns: repeat(2, 1fr);
-      width: auto;
-  }
+.dashboard-text {
+  flex: 1;
+  padding-right: 30px;
+  max-width: 500px;
 }
 
-/* Sidebar Adjustment for Smaller Screens */
-/* @media (max-width: 800px) {
-  .sidebar {
-      width: 300px; 
-  }
+.dashboard-text h2 {
+  color: #333;
+}
 
-  .main-content {
-      margin-left: 200px; 
-  }
-} */
+.dashboard-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.animated-facts {
+  margin-top: 15px;
+  font-style: italic;
+  color: #007acc;
+}
+
+.dashboard-image {
+  flex: 1;
+  max-width: 350px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Features */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  background: #e3f2fd;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  color: #2c3e50;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.feature-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #007acc;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

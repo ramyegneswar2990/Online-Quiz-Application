@@ -15,7 +15,7 @@ const UserLogin = () => {
         e.preventDefault();
         try {
               const response=  await loginUser({ ...formData, action: "login", role: "user" });
-              // console.log(response.data);
+               console.log(response.data);
         //    // Store token and user in localStorage
              const { token, user } = response.data;
       

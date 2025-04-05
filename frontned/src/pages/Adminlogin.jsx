@@ -16,11 +16,8 @@ const AdminLogin = () => {
         try {
             await loginUser({ ...formData, action: "login", role: "admin" });
             alert("Admin Logged In Successfully");
-<<<<<<< HEAD
             navigate("/User-Dashboard");
-=======
             navigate("/AdminDashboard");
->>>>>>> eba5471056621774731011bed75852cc0483d207
         } catch (error) {
             console.error("Login failed", error);
         }

@@ -10,6 +10,7 @@ import AdminRegistration from "./pages/AdminRegistration";
 import CourseTopics from "./pages/CourseTopics";
 import Questions from "./pages/Questions";
 import Result from "./pages/Result";
+//import Hom from "./pages/hom";
 // import Protected from "./components/Protected";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path ="/courses/:courseName" element={<CourseTopics/>}/>
         <Route path="/courses/:courseName/topics/:topicId" element={<Questions />} />
         <Route path="/result" element={<Result />} />
+                {/* //<Route path="/hom" element={<Hom/>}/> */}
 
       </Routes>
     </Router>
