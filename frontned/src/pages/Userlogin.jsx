@@ -8,24 +8,45 @@ const UserLogin = () => {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+         setFormData({ ...formData, [e.target.name]: e.target.value });
+        
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await loginUser({ ...formData, action: "login", role: "user" });
-            alert("User Logged In Successfully");
-            navigate("/dashboard"); // Redirect to dashboard after successful login
-        } catch (error) {
-            console.error("Login failed", error);
-        }
-    };
+              const response=  await loginUser({ ...formData, action: "login", role: "user" });
+              // console.log(response.data);
+        //    // Store token and user in localStorage
+             const { token, user } = response.data;
+      
+             if (token && user) {
+            
+            //    console.log("Token:", localStorage.getItem("token"));
 
+               localStorage.setItem("token", token);
+               localStorage.setItem("user", JSON.stringify(user));
+            //    console.log("Token:",token);
+               
+            //    console.log("User:",user.name);
+              alert("User Logged In Successfully");
+              navigate("/UserDashboard");
+             } else {
+               alert("Login failed: Invalid response from server");
+             }
+        } catch (error) {
+          console.error("Login failed", error);
+          alert("Invalid email or password");
+        }
+      };
+
+      
     return (
         <div className="user-login-container">
+            <div className ="user-login-box">
             <h2>User Login</h2>
+
             <form onSubmit={handleSubmit}>
+
                 <div className="input-group">
                     <label>Email:</label>
                     <input type="email" name="email" value={formData.email} onChange={handleChange} required />
@@ -39,6 +60,7 @@ const UserLogin = () => {
             <p className="switch-auth">
                 Don't have an account? <Link to="/UserRegistration">Register</Link>
             </p>
+            </div>
         </div>
     );
 };

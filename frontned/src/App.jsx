@@ -7,6 +7,9 @@ import UserRegistration from "./pages/UserRegistration";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import AdminRegistration from "./pages/AdminRegistration";
+import CourseTopics from "./pages/CourseTopics";
+import Questions from "./pages/Questions";
+import Result from "./pages/Result";
 // import Protected from "./components/Protected";
 
 function App() {
@@ -18,9 +21,13 @@ function App() {
         <Route path="/Adminlogin" element={<Adminlogin />} />
         <Route path="/UserRegistration" element={<UserRegistration />} />
         <Route path="/AdminRegistration" element={<AdminRegistration />} />
-        <Route path="/User-Dashboard" element={<UserDashboard />}/>
+        <Route path="/UserDashboard" element={<UserDashboard />}/>
         <Route path="/AdminDashboard" element={<AdminDashboard />}/>
-        <Route path="/Courses" element={<Courses />}/>
+        <Route path="/courses" element={<Courses />}/>
+        <Route path ="/courses/:courseName" element={<CourseTopics/>}/>
+        <Route path="/courses/:courseName/topics/:topicId" element={<Questions />} />
+        <Route path="/result" element={<Result />} />
+
       </Routes>
     </Router>
   );

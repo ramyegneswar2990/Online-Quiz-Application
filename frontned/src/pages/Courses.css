@@ -1,51 +1,51 @@
-/* Apply background to the entire screen */
+
 body, html {
     height: 100%;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, #ffe6f2, #fff); /* Light pink to white gradient */
+    background: linear-gradient(to right, #ffe6f2, #fff); /* Light pink to white */
     font-family: Arial, sans-serif;
-}
-
-/* Ensure courses container takes full height */
-.courses-container {
-    padding: 0 10px; /* Removed top padding to remove space from menu */
+  }
+  
+  /* Courses container wrapping all content */
+  .main-content {
+    padding: 20px;
     min-height: 100vh;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 1200px;
+    /* display: flex; */
+   /* flex-direction: column;*/
     align-items: center;
     background-color: white;
-}
-
-/* Heading styling */
-h1 {
+  }
+  
+  /* Heading styling */
+  h1 {
     color: #1e96fc;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    padding-bottom: 5px;
-}
-
-/* Fixed Grid Layout for Courses */
-.courses-grid {
+  }
+  
+  /* Grid layout for courses */
+  .courses-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Fixed 3 columns */
-    row-gap: 20px; /* Space between rows */
-    column-gap: 20px; /* Space between columns */
-    justify-content: center;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* Styling for Course Boxes */
-.course-box {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+    justify-items: center;
+  }
+  
+  /* Individual course box */
+  .course-box {
     background: linear-gradient(to bottom, #ffffff, #e6f7ff);
     color: black;
     text-decoration: none;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 20px;
+    border-radius: 10px;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
@@ -54,43 +54,50 @@ h1 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 160px;
+    height: 180px;
     width: 260px;
     box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
     border: 2px solid #a6e1fa;
-}
-
-/* Icon Styling */
-.course-icon {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 8px;
-}
-
-/* Description Styling */
-.course-box p {
+  }
+  
+  /* Icon inside each box */
+  .course-icon {
+    font-size: 36px;
+    color: #1e96fc;
+    margin-bottom: 10px;
+  }
+  
+  /* Description styling */
+  .course-box p {
     font-size: 13px;
     font-weight: normal;
-    margin-top: 3px;
-}
-
-/* Hover Effect */
-.course-box:hover {
+    margin-top: 6px;
+    color: #444;
+  }
+  
+  /* Hover effect */
+  .course-box:hover {
     background: linear-gradient(to bottom, #f2f2f2, lightblue);
-    transform: scale(1.03);
-    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.15);
-    border-color: #a6e1fa;
-}
-
-/* Responsive Design - Keep Fixed Columns */
-@media (max-width: 900px) {
+    transform: scale(1.05);
+    box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.2);
+    border-color: #1e96fc;
+  }
+  
+  /* Responsive: 2 columns on tablets */
+  @media (max-width: 900px) {
     .courses-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+      grid-template-columns: repeat(2, 1fr);
     }
-}
-
-@media (max-width: 600px) {
+  }
+  
+  /* Responsive: 1 column on phones */
+  @media (max-width: 600px) {
     .courses-grid {
-        grid-template-columns: repeat(1, 1fr); /* 1 column for very small screens */
+      grid-template-columns: repeat(1, 1fr);
     }
-}
+  
+    .course-box {
+      width: 90%;
+    }
+  }
+  
