@@ -1,24 +1,26 @@
-const Leaderboard = require("../models/Leaderboard");
+const Result = require('../models/Result');
 
-const addScore = async (req, res) => {
-    const { userId, quizId, score } = req.body;
+const getLeaderboardBySubject = async (req, res) => {
+  const { courseName } = req.params;
+  console.log(courseName);
 
-    try {
-        const leaderboardEntry = new Leaderboard({ user: userId, quiz: quizId, score });
-        await leaderboardEntry.save();
-        res.status(201).json(leaderboardEntry);
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error });
-    }
+  try {
+    const leaderboard = await Result.aggregate([
+      { $match: { courseName } }, // Filter results by subject
+      {
+        $group: {
+            _id: "$userId",
+            username: { $first: "$username" },
+            totalScore: { $sum: "$score" }
+          }
+      },
+      { $sort: { totalScore: -1 } } // Sort by score (descending)
+    ]);
+
+    res.json(leaderboard);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch leaderboard' });
+  }
 };
 
-const getLeaderboardByQuiz = async (req, res) => {
-    try {
-        const leaderboard = await Leaderboard.find({ quiz: req.params.quizId }).sort({ score: -1 });
-        res.json(leaderboard);
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error });
-    }
-};
-
-module.exports = { addScore, getLeaderboardByQuiz };
+module.exports = { getLeaderboardBySubject };

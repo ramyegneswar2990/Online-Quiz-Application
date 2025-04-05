@@ -1,9 +1,9 @@
 const express = require("express");
-const { getLeaderboard } = require("../controllers/leaderboardController");
-const { protect } = require("../middlewares/authMiddleware");
+const { getLeaderboardBySubject } = require("../controllers/leaderboardController");
+//const { protect } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.get("/", protect, getLeaderboard); 
+router.get("/:courseName",getLeaderboardBySubject); 
 
 module.exports = router;

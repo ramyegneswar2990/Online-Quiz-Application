@@ -3,7 +3,5 @@ const { /*registerUser,loginUser */ authUser} =require("../controllers/authContr
 
 const router = express.Router();
 router.post("/",authUser);
-// router.post("/register",registerUser);
-// router.post("/login",loginUser);
 
 module.exports =router
