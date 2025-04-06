@@ -10,8 +10,8 @@ import AdminRegistration from "./pages/AdminRegistration";
 import CourseTopics from "./pages/CourseTopics";
 import Questions from "./pages/Questions";
 import Result from "./pages/Result";
-//import Hom from "./pages/hom";
-// import Protected from "./components/Protected";
+
+import LeaderBoard from "./pages/LeaderBoard";
 
 function App() {
   return (
@@ -28,7 +28,9 @@ function App() {
         <Route path ="/courses/:courseName" element={<CourseTopics/>}/>
         <Route path="/courses/:courseName/topics/:topicId" element={<Questions />} />
         <Route path="/result" element={<Result />} />
-                {/* //<Route path="/hom" element={<Hom/>}/> */}
+
+    
+        <Route path ="/leaderboard" element ={<LeaderBoard/>}/>
 
       </Routes>
     </Router>

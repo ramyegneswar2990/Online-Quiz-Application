@@ -1,38 +1,5 @@
-// const Course = require("../models/Course");
-
-// // 📌 Get all courses
-// const getCourses = async (req, res) => {
-//   try {
-//     const courses = await Course.find({}, { name: 1, _id: 0 }); // Fetch only course names
-//     res.json(courses);
-//   } catch (error) {
-//     res.status(500).json({ error: `Server error: ${error.message}` });
-//   }
-// };
-
-// // 📌 Get topics by course name
-// const getTopicsByCourse = async (req, res) => {
-//   try {
-//     const courseName = req.params.courseName;
-    
-//     // Find the course document based on the course name
-//     const course = await Course.findOne({ name: courseName });
-
-//     if (!course) {
-//       return res.status(404).json({ message: "Course not found" });
-//     }
-
-//     return res.json(course.topics);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error", error: error.message });
-//   }
-// };
-
-// module.exports = { getCourses, getTopicsByCourse };
-
 const fs = require("fs");
 const path = require("path");
-
 // 📌 Load Courses from JSON File
 const getCoursesFromFile = () => {
     const filePath = path.join(__dirname, "../new course db.json"); // Ensure this path is correct
@@ -95,7 +62,4 @@ const getQuestionsByTopic = (req, res) => {
 
     res.json(topic.questions || []);
 };
-
-
-// 📌 Export Controllers
 module.exports = { getAllCourses, getTopicsByCourse ,getQuestionsByTopic};

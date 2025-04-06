@@ -10,7 +10,7 @@ const UserDashboard = () => {
     <div className="dashboard-container">
       <aside className="sidebar">
         <ul className="nav-list">
-          <li className="nav-item"><Link to="/hom" className="nav-link">Home</Link></li>
+          <li className="nav-item"><Link to="/UserDashboard" className="nav-link">Home</Link></li>
           <li className="nav-item"><Link to="/courses" className="nav-link">Courses</Link></li>
           <li className="nav-item"><Link to="/leaderboard" className="nav-link">Leaderboard</Link></li>
           <li><button className="logout-button">Logout</button></li>
