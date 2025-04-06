@@ -15,6 +15,9 @@ const UserDashboard = ({ children }) => (
         <li className="nav-item">
           <Link to="/leaderboard" className="nav-link">Leaderboard</Link>
         </li>
+        <li className="nav-item">
+          <Link to="/certificate" className="nav-link">Certificate</Link>
+        </li>
         <li>
           <button className="logout-button">Logout</button>
         </li>

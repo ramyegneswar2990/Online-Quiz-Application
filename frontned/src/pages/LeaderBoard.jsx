@@ -3,9 +3,9 @@ import axios from "axios";
 import "./Leaderboard.css";
 
 const subjects = [
-  "Operating Systems",
-  "Computer Networks",
-  "Software Engineering",
+  "Operating Systems (OS)",
+  "Computer Networks (CN)",
+  "Software Engineering (SE)",
   "Aptitude",
   "Data Structures and Algorithms",
   "C++ Programming",

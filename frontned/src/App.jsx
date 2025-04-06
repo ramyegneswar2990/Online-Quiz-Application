@@ -11,6 +11,7 @@ import CourseTopics from "./pages/CourseTopics";
 import Questions from "./pages/Questions";
 import Result from "./pages/Result";
 import LeaderBoard from "./pages/LeaderBoard";
+import Certificate from "./pages/Certificate";
 // import Protected from "./components/Protected";
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
         <Route path="/courses/:courseName/topics/:topicId" element={<Questions />} />
         <Route path="/result" element={<Result />} />
         <Route path ="/leaderboard" element ={<LeaderBoard/>}/>
-
+       <Route path ="/certificate" element ={<Certificate/>} />
       </Routes>
     </Router>
   );
