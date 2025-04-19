@@ -308,6 +308,11 @@
               "answer": "Identifies a wireless network"
             }
           ]
+        },
+        {
+          "id": 1744924367876,
+          "name": "TCP",
+          "questions": []
         }
       ]
     },
@@ -619,6 +624,11 @@
               "answer": "Direct Memory Access"
             }
           ]
+        },
+        {
+          "id": 1744924287492,
+          "name": "",
+          "questions": []
         }
       ]
     },
@@ -995,6 +1005,17 @@
                 "System.out.println()"
               ],
               "answer": "printf()"
+            },
+            {
+              "id": 1744960417780,
+              "question": " \"Hello World\" in C?",
+              "options": [
+                "print(\"Hello World\");",
+                "echo(\"Hello World\");",
+                "printf(\"Hello World\");",
+                "cout << \"Hello World\";"
+              ],
+              "answer": "printf(\"Hello World\");"
             }
           ]
         },
@@ -2550,6 +2571,17 @@
                 "Insertion Sort"
               ],
               "answer": "Insertion Sort"
+            },
+            {
+              "id": 1744999684164,
+              "question": "What are the main advantages of using arrays in programming?",
+              "options": [
+                "Arrays allow random access to elements using an index.",
+                " Arrays use more memory than linked lists.",
+                "Arrays automatically resize when needed.",
+                "Arrays do not allow storing elements of the same data type."
+              ],
+              "answer": "Arrays allow random access to elements using an index."
             }
           ]
         },
@@ -2796,6 +2828,61 @@
               "answer": "Kruskal's Algorithm"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": 1744921900213,
+      "name": "Data Science",
+      "topics": [
+        {
+          "id": 1744922229361,
+          "name": "Introduction to Data Science",
+          "questions": [
+            {
+              "id": 1744922641715,
+              "question": "What is Data Science?",
+              "options": [
+                "Science of data",
+                "Science of machines",
+                "Science of computation",
+                "None"
+              ],
+              "answer": "Science of data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1744921958488,
+      "name": "AI",
+      "topics": [
+        {
+          "id": 1744924971184,
+          "name": "A* Algorithm",
+          "questions": []
+        },
+        {
+          "id": 1744999489954,
+          "name": "A* Alogorithm",
+          "questions": []
+        }
+      ]
+    },
+    {
+      "id": 1744925021476,
+      "name": "FULL STACK",
+      "topics": [
+        {
+          "id": 1744925750947,
+          "name": "REACT",
+          "questions": []
+        },
+        {
+          "id": 1744958127473,
+          "name": "Node Js",
+          "questions": []
         }
       ]
     }

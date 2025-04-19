@@ -1,13 +1,13 @@
-const errorHandler = (err, req, res, next) => {
-    console.error(err.stack);
-    res.status(err.status || 500).json({
-        message: err.message || "Internal Server Error",
-    });
-};
+// const errorHandler = (err, req, res, next) => {
+//     console.error(err.stack);
+//     res.status(err.status || 500).json({
+//         message: err.message || "Internal Server Error",
+//     });
+// };
 
-// 404 Middleware
-const notFound = (req, res, next) => {
-    res.status(404).json({ message: "API route not found" });
-};
+// // 404 Middleware
+// const notFound = (req, res, next) => {
+//     res.status(404).json({ message: "API route not found" });
+// };
 
-module.exports = { errorHandler, notFound };
+// module.exports = { errorHandler, notFound };

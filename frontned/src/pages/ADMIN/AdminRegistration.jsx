@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { registerUser } from "../services/api";
+import { registerUser } from "../../services/api";
 import { useNavigate, Link } from "react-router-dom";
 import "./AdminRegistration.css";
 
@@ -16,10 +16,13 @@ const AdminRegistration = () => {
         try {
             await registerUser({ ...formData, action: "register", role: "admin" });
             alert("Admin Registered Successfully");
-            navigate("/AdminDashboard"); // Redirect to admin login after registration
+            navigate("/AdminDashboard");
         } catch (error) {
-            console.error("Registration failed", error);
+            const backendMessage = error.response?.data?.message || "Registration failed";
+            console.error("Registration failed:", backendMessage);
+            alert(backendMessage); // Show backend message to user
         }
+        
     };
 
     return (

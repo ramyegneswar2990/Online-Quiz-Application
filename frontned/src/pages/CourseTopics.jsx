@@ -44,7 +44,13 @@ const CourseTopics = () => {
             </li>
           ))}
         </ul>
+        <div style={{ textAlign: "center", marginTop: "20px" ,textDecorationColor:"yellow"}}>
+          <button onClick={() => navigate("/courses")} className="back-button">
+            Go Back
+          </button>
+        </div>
       </div>
+      
     </div>
   );
 };
