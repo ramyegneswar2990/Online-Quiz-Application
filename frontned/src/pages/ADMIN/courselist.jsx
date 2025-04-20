@@ -55,7 +55,7 @@ const CourseList = () => {
       <div className="course-list">
         {courses.map((course) => (
           <div className="course-box" key={course.id}>
-            <h3>📘 {course.name}</h3>
+            <h3> {course.name}</h3>
             <div className="button-group">
               <button onClick={() => navigate(`/add-topic/${course.name}`)}>
                 ➕ Add Topic
