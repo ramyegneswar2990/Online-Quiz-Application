@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Sidebar from '../../components/Sidebar';
 import './courselist.css';
 
 const CourseList = () => {
@@ -35,11 +36,12 @@ const CourseList = () => {
         name: newCourseName,
       });
       setNewCourseName("");
+      setError("");
       setIsSubmitted(false);
       fetchCourses();
     } catch (error) {
       setIsSubmitted(true);
-      if (error.response && error.response.data && error.response.data.message) {
+      if (error.response?.data?.message) {
         setError(error.response.data.message);
       } else {
         setError("Something went wrong while adding the course. Please try again.");
@@ -48,14 +50,17 @@ const CourseList = () => {
   };
 
   return (
-    <div className="main-container">
-      <h2>📚 Course Management</h2>
+    <div className="course-page">
+      <Sidebar />
+      <div className="centered-content">
+        <div className="main-container">
+          <h2>📚 Course Management</h2>
 
       {/* Course List */}
       <div className="course-list">
         {courses.map((course) => (
           <div className="course-box" key={course.id}>
-            <h3> {course.name}</h3>
+            <h3>📘 {course.name}</h3>
             <div className="button-group">
               <button onClick={() => navigate(`/add-topic/${course.name}`)}>
                 ➕ Add Topic
@@ -68,17 +73,19 @@ const CourseList = () => {
         ))}
       </div>
 
-      {/* Add New Course */}
-      <div className="add-course-form">
-        <h3>➕ Add New Course</h3>
-        {isSubmitted && error && <p className="error-message">{error}</p>}
-        <input
-          type="text"
-          placeholder="Course Name"
-          value={newCourseName}
-          onChange={(e) => setNewCourseName(e.target.value)}
-        />
-        <button onClick={handleAddCourse}>Add Course</button>
+          {/* Add New Course */}
+          <form className="add-course-form" onSubmit={handleAddCourse}>
+            <h3>📘 ➕ Add New Course</h3>
+            {isSubmitted && error && <p className="error-message">{error}</p>}
+            <input
+              type="text"
+              placeholder="Course Name"
+              value={newCourseName}
+              onChange={(e) => setNewCourseName(e.target.value)}
+            />
+            <button type="submit">Add Course</button>
+          </form>
+        </div>
       </div>
     </div>
   );

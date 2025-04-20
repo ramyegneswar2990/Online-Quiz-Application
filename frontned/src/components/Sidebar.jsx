@@ -9,13 +9,13 @@ const Sidebar = () => {
     // Add your logout logic here (like clearing localStorage or cookies)
     // For now, just redirect to login
     alert("admin signout successfully");
-    navigate('/adminlogin');
+    navigate('/');
   };
 
   return (
     <div className="top-navbar">
       <div className="navbar-left">
-        <span className="logo">Admin Panel</span>
+        <span className="logo"> <Link to="/AdminDashboard" className="user-link">Admin Panel</Link></span>
       </div>
       <div className="navbar-right">
         <Link to="/UserList" className="user-link">User List</Link>

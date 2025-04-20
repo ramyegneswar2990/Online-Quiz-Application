@@ -15,7 +15,7 @@ const UserLogin = () => {
         e.preventDefault();
         try {
               const response=  await loginUser({ ...formData, action: "login", role: "user" });
-              // console.log(response.data);
+               console.log(response.data);
         //    // Store token and user in localStorage
              const { token, user } = response.data;
       
@@ -25,9 +25,9 @@ const UserLogin = () => {
 
                localStorage.setItem("token", token);
                localStorage.setItem("user", JSON.stringify(user));
-              // console.log(user);
+               localStorage.setItem("userId",user.id);
                localStorage.setItem("username", user.name);
-
+               
               alert("User Logged In Successfully");
               navigate("/UserDashboard");
              } else {

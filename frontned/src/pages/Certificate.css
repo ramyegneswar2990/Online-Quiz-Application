@@ -1,3 +1,10 @@
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom right, #ffffff, #f0f0f0);
+}
+
 .certificate-container {
     position: absolute;
     top: 50%;

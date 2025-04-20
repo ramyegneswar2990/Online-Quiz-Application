@@ -8,7 +8,7 @@ html, body, #root {
 .OUTER_CONTAINER {
   display: flex;
   justify-content: center; /* Center horizontally */
-  padding: 40px 20px; /* Add top/bottom space */
+  padding: 100px 20px; /* Add top/bottom space */
   background-color: #f0f2f5;
   min-height: 100vh; /* Full page */
   box-sizing: border-box;

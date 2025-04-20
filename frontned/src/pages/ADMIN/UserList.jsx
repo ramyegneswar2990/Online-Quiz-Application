@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./UserList.css";
+import Sidebar from '../../components/Sidebar';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -39,6 +40,7 @@ const UserList = () => {
 
   return (
     <div className="OUTER_CONTAINER">
+      <Sidebar />
       <div className="INNER_CONTAINER">
       <h2 style={{ textAlign: "center" }}>User List</h2>
 

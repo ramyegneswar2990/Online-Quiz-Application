@@ -16,6 +16,7 @@ const AdminLogin = () => {
         try {
             await loginUser({ ...formData, action: "login", role: "admin" });
             alert("Admin Logged In Successfully");
+            navigate("/User-Dashboard");
             navigate("/AdminDashboard");
         } catch (error) {
             console.error("Login failed", error);

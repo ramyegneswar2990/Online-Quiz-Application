@@ -1,52 +1,10 @@
-// import React from "react";
-// import { Link } from "react-router-dom";
-// import { FaLaptopCode, FaNetworkWired, FaCode, FaPython, FaJava, FaCuttlefish, FaMicrochip, FaCalculator, FaProjectDiagram } from "react-icons/fa";
-// import "./Courses.css";
-// import UserDashboard from "./UserDashboard"; // Import UserDashboard to include sidebar
-
-// const courses = [
-//   { name: "Operating Systems", path: "/courses/Operating Systems (OS)", icon: <FaMicrochip />, desc: "Learn process management, memory, and file systems." },
-//   { name: "Computer Networks ", path: "/courses/Computer Networks (CN)", icon: <FaNetworkWired />, desc: "Understand networking concepts and protocols." },
-//   { name: "Software Engineering ", path: "/courses/Software Engineering (SE)", icon: <FaProjectDiagram />, desc: "Learn software design and development models." },
-//   { name: "Aptitude", path: "/courses/Aptitude", icon: <FaCalculator />, desc: "Sharpen your logical and problem-solving skills." },
-//   { name: "Data Structures and Algorithms", path: "/courses/Data Structures and Algorithms", icon: <FaLaptopCode />, desc: "Master algorithms and data structures for coding." },
-//   { name: "C++ Programming", path: "/courses/C++ Programming", icon: <FaCode />, desc: "Enhance your C++ programming skills." },
-//   { name: "Python Programming", path: "/courses/Python Programming", icon: <FaPython />, desc: "Explore Python for AI, ML, and development." },
-//   { name: "Java Programming", path: "/courses/Java Programming", icon: <FaJava />, desc: "Master Java for backend and app development." },
-//   { name: "C Programming", path: "/courses/C Programming", icon: <FaCuttlefish />, desc: "Fundamentals of C programming." },
-//   {name: "FULL STACK",path:"/courses/FULL STACK"}
-// ];
-
-// const Courses = () => {
-//   return (
-//     <UserDashboard>
-//       <div className="main-content">
-//         <h1>Courses</h1>
-//         <div className="courses-grid">
-//           {courses.map((course, index) => (
-//             <Link key={index} to={course.path} className="course-box">
-//               <div className="icon">{course.icon}</div>
-//               <h2>{course.name}</h2>
-//               <p>{course.desc}</p>
-//             </Link>
-//           ))}
-//         </div>
-//       </div>
-//     </UserDashboard>
-//   );
-// };
-
-// export default Courses;
-
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Courses.css";
-import UserDashboard from "./UserDashboard";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true); // For loading spinner
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -65,26 +23,43 @@ const Courses = () => {
   }, []);
 
   return (
-    <UserDashboard>
-      <div className="main-content">
+    <div className="dashboard-container">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <ul className="nav-list">
+          <li className="nav-item"><Link to="/UserDashboard" className="nav-link">Home</Link></li>
+          <li className="nav-item"><Link to="/courses" className="nav-link">Courses</Link></li>
+          <li className="nav-item"><Link to="/leaderboard" className="nav-link">Leaderboard</Link></li>
+          <li className="nav-item"><Link to="/certificate" className="nav-link">Certificate</Link></li>
+          <li className="nav-item"><Link to="/analytics" className="nav-link">Analytics</Link></li>
+          <li><button className="logout-button">Logout</button></li>
+        </ul>
+      </aside>
+
+      {/* Main Content */}
+      <main className="main-content">
         <h1>Courses</h1>
+
         {loading ? (
           <p>Loading courses...</p>
         ) : (
           <div className="courses-grid">
-            {courses.map((course, index) => (
-              <Link key={index} to={`/courses/${course.name}`} className="course-box">
-                <h2>📘{course.name}</h2>
-                <p>{course.desc}</p>
-              </Link>
-            ))}
+            {courses.map((course, index) => {
+              
+              const path = `/courses/${course.name}`;
+              return (
+                <Link key={index} to={path} className="course-box">
+                 
+                  <h2>{course.name}</h2>
+            
+                </Link>
+              );
+            })}
           </div>
         )}
-      </div>
-    </UserDashboard>
+      </main>
+    </div>
   );
 };
 
 export default Courses;
-
-

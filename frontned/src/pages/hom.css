@@ -1,0 +1,69 @@
+/* Home.css */
+
+.home-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom, #e0ffe0, #ffffff);
+    min-height: 100vh;
+    padding: 2rem;
+    color: #333;
+  }
+  
+  .hero-section {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #d4f4d4;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2);
+    margin-bottom: 2rem;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    color: #2e7d32;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  .start-btn {
+    background-color: #388e3c;
+    color: #fff;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .start-btn:hover {
+    background-color: #2e7d32;
+  }
+  
+  .about-section,
+  .features-section {
+    background-color: #f0fff0;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 128, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .about-section h2,
+  .features-section h2 {
+    color: #388e3c;
+    margin-bottom: 1rem;
+  }
+  
+  .features-section ul {
+    list-style: none;
+    padding-left: 1rem;
+  }
+  
+  .features-section li {
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+  }
+  

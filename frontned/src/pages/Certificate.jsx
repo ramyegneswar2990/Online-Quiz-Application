@@ -1,152 +1,39 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import "./Certificate.css";
-
-// const courses = [
-//   "Operating Systems (OS)",
-//   "Computer Networks (CN)",
-//   "Software Engineering (SE)",
-//   "Aptitude",
-//   "Data Structures and Algorithms",
-//   "C++ Programming",
-//   "Python Programming",
-//   "Java Programming",
-//   "C Programming"
-// ];
-
-// const Certificate = () => {
-//   const [selectedCourse, setSelectedCourse] = useState("");
-//   const [username, setUsername] = useState(null);
-//   const [errorMessage, setErrorMessage] = useState("");
-//   const [successMessage, setSuccessMessage] = useState(""); // ✅ NEW
-
-//   useEffect(() => {
-//     const storedUsername = localStorage.getItem("username");
-//     setUsername(storedUsername);
-//   }, []);
-
-//   const handleDownload = async () => {
-//     if (!username) {
-//       alert("You must be logged in to download the certificate.");
-//       return;
-//     }
-
-//     if (!selectedCourse) {
-//       alert("Please select a course.");
-//       return;
-//     }
-
-//     try {
-//       const response = await axios.get(
-//         `http://localhost:5000/api/certificate/${username}/${encodeURIComponent(selectedCourse)}`,
-//         { responseType: "blob" }
-//       );
-
-//       const percentage = response.headers["x-percentage"] || "82.00%"; // change if backend supports it
-
-//       const blob = new Blob([response.data], { type: "application/pdf" });
-//       const url = window.URL.createObjectURL(blob);
-
-//       const link = document.createElement("a");
-//       link.href = url;
-//       link.setAttribute("download", `${selectedCourse}_Certificate.pdf`);
-//       document.body.appendChild(link);
-//       link.click();
-//       window.URL.revokeObjectURL(url);
-
-//       setErrorMessage("");
-//       setSuccessMessage(`🎉 Congratulations! Your certificate has been downloaded. You scored ${percentage} in this course.`); // ✅ NEW
-//     } catch (error) {
-//       setSuccessMessage(""); // clear previous success message
-//       if (error.response) {
-//         try {
-//           const data = await error.response.data.text();
-//           const parsed = JSON.parse(data);
-//           if (parsed.message && parsed.percentage) {
-//             setErrorMessage(`${parsed.message} Your current score is ${parsed.percentage}.`);
-//           } else if (parsed.message) {
-//             setErrorMessage(parsed.message);
-//           } else {
-//             setErrorMessage("Something went wrong while downloading.");
-//           }
-//         } catch (err) {
-//           setErrorMessage("Something went wrong while downloading.");
-//         }
-//       } else {
-//         console.error("Error downloading certificate:", error);
-//         setErrorMessage("An error occurred. Please try again.");
-//       }
-//     }
-//   };
-
-//   return (
-//     <div className="outbox">
-//       <div className="certificate-container">
-//         <div className="certificate-title">Get Your Course Certificate</div>
-//         <div className="certificate-subtitle">
-//           Select a course to download your certificate. If you're eligible, it will download. Otherwise, keep practicing!
-//         </div>
-
-//         <select
-//           value={selectedCourse}
-//           onChange={(e) => {
-//             setSelectedCourse(e.target.value);
-//             setErrorMessage("");
-//             setSuccessMessage(""); // clear success message on change
-//           }}
-//           className="course-dropdown"
-//         >
-//           <option value="">Select a Course</option>
-//           {courses.map((course, index) => (
-//             <option key={index} value={course}>
-//               {course}
-//             </option>
-//           ))}
-//         </select>
-
-//         <button onClick={handleDownload} className="download-btn">
-//           Download Certificate
-//         </button>
-
-//         {errorMessage && (
-//           <div className="error-message">{errorMessage}</div>
-//         )}
-//         {successMessage && (
-//           <div className="success-message">{successMessage}</div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Certificate;
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import "./Certificate.css";
 
 const Certificate = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [username, setUsername] = useState(null);
-  const [courses, setCourses] = useState([]); // Fetching courses dynamically
+  const [courses, setCourses] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [loadingCourses, setLoadingCourses] = useState(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername);
-
-    fetchCourses(); // Fetch the courses when page loads
+    fetchCourses();
   }, []);
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/courses/"); // Same API
-      setCourses(response.data);
+      const response = await axios.get("http://localhost:5000/api/courses/");
+      console.log("Fetched Courses:", response.data);
+
+      // Expecting course objects like { name: "Python" }
+      if (Array.isArray(response.data)) {
+        setCourses(response.data);
+      } else {
+        console.warn("Unexpected response format:", response.data);
+        setCourses([]);
+      }
     } catch (error) {
       console.error("Error fetching courses:", error);
+      setCourses([]);
     } finally {
       setLoadingCourses(false);
     }
@@ -206,17 +93,33 @@ const Certificate = () => {
     }
   };
 
-  return (
-    <div className="outbox">
-      <div className="certificate-container">
-        <div className="certificate-title">Get Your Course Certificate</div>
-        <div className="certificate-subtitle">
-          Select a course to download your certificate. If you're eligible, it will download. Otherwise, keep practicing!
-        </div>
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
-        {loadingCourses ? (
-          <p>Loading courses...</p>
-        ) : (
+  return (
+    <div className="dashboard-container">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <ul className="nav-list">
+          <li className="nav-item"><Link to="/UserDashboard" className="nav-link">Home</Link></li>
+          <li className="nav-item"><Link to="/courses" className="nav-link">Courses</Link></li>
+          <li className="nav-item"><Link to="/leaderboard" className="nav-link">Leaderboard</Link></li>
+          <li className="nav-item"><Link to="/certificate" className="nav-link">Certificate</Link></li>
+          <li className="nav-item"><Link to="/analytics" className="nav-link">Analytics</Link></li>
+          <li><button className="logout-button" onClick={handleLogout}>Logout</button></li>
+        </ul>
+      </aside>
+
+      {/* Main Content */}
+      <div className="outbox">
+        <div className="certificate-container">
+          <div className="certificate-title">Get Your Course Certificate</div>
+          <div className="certificate-subtitle">
+            Select a course to download your certificate. If you're eligible, it will download. Otherwise, keep practicing!
+          </div>
+
           <select
             value={selectedCourse}
             onChange={(e) => {
@@ -227,24 +130,24 @@ const Certificate = () => {
             className="course-dropdown"
           >
             <option value="">Select a Course</option>
-            {courses.map((course, index) => (
-              <option key={index} value={course.name}>
-                {course.name}
-              </option>
-            ))}
+            {loadingCourses ? (
+              <option disabled>Loading courses...</option>
+            ) : (
+              courses.map((course, index) => (
+                <option key={index} value={course.name}>
+                  {course.name}
+                </option>
+              ))
+            )}
           </select>
-        )}
 
-        <button onClick={handleDownload} className="download-btn">
-          Download Certificate
-        </button>
+          <button onClick={handleDownload} className="download-btn">
+            Download Certificate
+          </button>
 
-        {errorMessage && (
-          <div className="error-message">{errorMessage}</div>
-        )}
-        {successMessage && (
-          <div className="success-message">{successMessage}</div>
-        )}
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {successMessage && <div className="success-message">{successMessage}</div>}
+        </div>
       </div>
     </div>
   );
