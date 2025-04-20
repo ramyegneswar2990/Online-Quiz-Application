@@ -12,6 +12,9 @@ import Questions from "./pages/Questions";
 import Result from "./pages/Result";
 
 import LeaderBoard from "./pages/LeaderBoard";
+import Certificate from "./pages/Certificate";
+import PerformanceAnalytics from "./pages/PerformanceAnalytics";
+// import Protected from "./components/Protected";
 
 function App() {
   return (
@@ -28,10 +31,12 @@ function App() {
         <Route path ="/courses/:courseName" element={<CourseTopics/>}/>
         <Route path="/courses/:courseName/topics/:topicId" element={<Questions />} />
         <Route path="/result" element={<Result />} />
+        <Route path="/analytics" element={<PerformanceAnalytics />} />
+
 
     
         <Route path ="/leaderboard" element ={<LeaderBoard/>}/>
-
+       <Route path ="/certificate" element ={<Certificate/>} />
       </Routes>
     </Router>
   );

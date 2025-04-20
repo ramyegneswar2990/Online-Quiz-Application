@@ -4,9 +4,9 @@ import axios from "axios";
 import "./Leaderboard.css";
 
 const subjects = [
-  "Operating Systems",
-  "Computer Networks",
-  "Software Engineering",
+  "Operating Systems (OS)",
+  "Computer Networks (CN)",
+  "Software Engineering (SE)",
   "Aptitude",
   "Data Structures and Algorithms",
   "C++ Programming",
@@ -42,6 +42,8 @@ const LeaderboardPage = () => {
           <li className="nav-item"><Link to="/UserDashboard" className="nav-link">Home</Link></li>
           <li className="nav-item"><Link to="/courses" className="nav-link">Courses</Link></li>
           <li className="nav-item"><Link to="/leaderboard" className="nav-link">Leaderboard</Link></li>
+          <li className="nav-item"><Link to="/certificate" className="nav-link">Certificate</Link></li>
+          <li className="nav-item"><Link to="/analytics" className="nav-link">Analytics</Link></li>
           <li><button className="logout-button">Logout</button></li>
         </ul>
       </aside>

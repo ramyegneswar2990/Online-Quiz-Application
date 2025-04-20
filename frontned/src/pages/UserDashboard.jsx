@@ -1,11 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./UserDashboard.css";
 import { FaTrophy, FaChartLine, FaQuestionCircle, FaCertificate } from "react-icons/fa";
-import quizImg from "../assets/quiz.jpg"; // Replace with your image path
+import quizImg from "../assets/quiz.jpg";
 
 const UserDashboard = () => {
+  const navigate = useNavigate();
+  const Username = localStorage.getItem("username");
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/#/");
+  };
+
   return (
     <div className="dashboard-container">
       <aside className="sidebar">
@@ -13,8 +21,11 @@ const UserDashboard = () => {
           <li className="nav-item"><Link to="/UserDashboard" className="nav-link">Home</Link></li>
           <li className="nav-item"><Link to="/courses" className="nav-link">Courses</Link></li>
           <li className="nav-item"><Link to="/leaderboard" className="nav-link">Leaderboard</Link></li>
-          <li><button className="logout-button">Logout</button></li>
-        </ul>
+          <li className="nav-item"><Link to="/certificate" className="nav-link">Certificate</Link></li>
+          <li className="nav-item"><Link to="/analytics" className="nav-link">Analytics</Link></li>
+          </ul>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
+        
       </aside>
 
       <main className="main-content">
@@ -24,11 +35,16 @@ const UserDashboard = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
         >
-          <motion.h1 initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3, duration: 0.8 }}>
-            🎓 Welcome to <span className="highlight-text">Proficiency Quiz</span>
+          <motion.h1
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            🎓 Welcome <span className="highlight-text">{Username}</span>
           </motion.h1>
 
-          <motion.p className="tagline"
+          <motion.p
+            className="tagline"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 1 }}
@@ -71,22 +87,33 @@ const UserDashboard = () => {
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
           >
-            <motion.div className="feature-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-              <FaQuestionCircle className="feature-icon" />
-              Topic-wise Quizzes
-            </motion.div>
-            <motion.div className="feature-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-              <FaChartLine className="feature-icon" />
-              Performance Analytics
-            </motion.div>
-            <motion.div className="feature-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-              <FaTrophy className="feature-icon" />
-              Live Leaderboard
-            </motion.div>
-            <motion.div className="feature-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-              <FaCertificate className="feature-icon" />
-              Certification & Recognition
-            </motion.div>
+            <Link to="/courses" className="feature-link">
+              <motion.div className="feature-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+                <FaQuestionCircle className="feature-icon" />
+                Topic-wise Quizzes
+              </motion.div>
+            </Link>
+
+            <Link to="/analytics" className="feature-link">
+              <motion.div className="feature-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+                <FaChartLine className="feature-icon" />
+                Performance Analytics
+              </motion.div>
+            </Link>
+
+            <Link to="/leaderboard" className="feature-link">
+              <motion.div className="feature-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+                <FaTrophy className="feature-icon" />
+                Live Leaderboard
+              </motion.div>
+            </Link>
+
+            <Link to="/certificate" className="feature-link">
+              <motion.div className="feature-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+                <FaCertificate className="feature-icon" />
+                Certification & Recognition
+              </motion.div>
+            </Link>
           </motion.div>
         </motion.div>
       </main>

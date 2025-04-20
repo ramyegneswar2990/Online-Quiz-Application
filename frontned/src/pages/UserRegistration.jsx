@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { registerUser } from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Link} from "react-router-dom";
 import "./UserRegistration.css";
 
 const UserRegistration = () => {
@@ -14,7 +14,10 @@ const UserRegistration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+           // console.log(Hello);
             await registerUser({ ...formData, role: "user", action: "register" });
+            console.log({ ...formData, role: "user", action: "register" });
+
             alert("User Registered Successfully");
             navigate("/Userlogin"); // Redirect after successful registration
         } catch (error) {
@@ -41,7 +44,7 @@ const UserRegistration = () => {
                 </div>
                 <button type="submit" className="submit-btn">Register</button>
             </form>
-            <p className="switch-auth">Already have an account? <a href="/UserLogin">Login</a></p>
+            <p className="switch-auth">Already have an account? <Link to = "/Userlogin">Login</Link></p>
             </div>
         </div>
     );

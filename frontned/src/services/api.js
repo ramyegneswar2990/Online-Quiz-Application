@@ -4,6 +4,7 @@ const API_BASE_URL = "http://localhost:5000/api/auth"; // Backend URL
 
 // User Registration
 export const registerUser = async (userData) => {
+    console.log(userData);
     return await axios.post(`${API_BASE_URL}`, userData);
 };
 

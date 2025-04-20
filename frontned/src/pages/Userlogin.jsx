@@ -25,9 +25,9 @@ const UserLogin = () => {
 
                localStorage.setItem("token", token);
                localStorage.setItem("user", JSON.stringify(user));
-            //    console.log("Token:",token);
-               
-            //    console.log("User:",user.name);
+              // console.log(user);
+               localStorage.setItem("username", user.name);
+
               alert("User Logged In Successfully");
               navigate("/UserDashboard");
              } else {

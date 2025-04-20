@@ -16,7 +16,7 @@ app.use("/api/courses", require("./routes/courseRoutes"));
 app.use("/api/auth", require("./routes/authRoutes")); 
 app.use("/api/result", require("./routes/resultRoutes"));
 app.use("/api/leaderboard",require("./routes/leaderboard"));
-
+app.use("/api",require("./routes/certificateRoutes"));
 // Start Server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
