@@ -1,4 +1,5 @@
 import React from "react";
+import Sidebar2 from "../components/Sidebar-2";
 import {
   LineChart,
   Line,
@@ -30,8 +31,9 @@ const PerformanceAnalytics = () => {
 
   return (
     <div className="dashboard-container">
+      <Sidebar2/>
       {/* Sidebar */}
-      <aside className="sidebar">
+      {/* <aside className="sidebar">
         <ul className="nav-list">
           <li className="nav-item">
             <Link to="/UserDashboard" className="nav-link">Home</Link>
@@ -52,7 +54,7 @@ const PerformanceAnalytics = () => {
             <button className="logout-button" onClick={handleLogout}>Logout</button>
           </li>
         </ul>
-      </aside>
+      </aside> */}
 
       {/* Analytics Main Section */}
       <div className="analytics-container">

@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./UserDashboard.css";
 import { FaTrophy, FaChartLine, FaQuestionCircle, FaCertificate } from "react-icons/fa";
-import quizImg from "../assets/quiz.jpg";
+import quizImg from "../assets/quiz-2.jpg";
+import Sidebar2 from "../components/Sidebar-2";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +18,8 @@ const UserDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <aside className="sidebar">
+      <Sidebar2/>
+      {/* <aside className="sidebar">
         <ul className="nav-list">
           <li className="nav-item"><Link to="/UserDashboard" className="nav-link">Home</Link></li>
           <li className="nav-item"><Link to="/courses" className="nav-link">Courses</Link></li>
@@ -26,7 +28,7 @@ const UserDashboard = () => {
           <li className="nav-item"><Link to="/analytics" className="nav-link">Analytics</Link></li>
         </ul>
         <button className="logout-button" onClick={handleLogout}>Logout</button>
-      </aside>
+      </aside> */}
 
       <main className="main-content">
         <motion.div
