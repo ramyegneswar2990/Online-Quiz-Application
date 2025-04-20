@@ -2511,7 +2511,7 @@
     },
     {
       "id": 9,
-      "name": "Data Structures and Algorithms",
+      "name": "DSA",
       "topics": [
         {
           "id": 1,
@@ -2862,11 +2862,6 @@
           "id": 1744924971184,
           "name": "A* Algorithm",
           "questions": []
-        },
-        {
-          "id": 1744999489954,
-          "name": "A* Alogorithm",
-          "questions": []
         }
       ]
     },
@@ -2885,6 +2880,11 @@
           "questions": []
         }
       ]
+    },
+    {
+      "id": 1745139844099,
+      "name": "DBMS",
+      "topics": []
     }
   ]
 }

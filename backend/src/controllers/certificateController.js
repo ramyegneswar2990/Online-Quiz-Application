@@ -9,7 +9,7 @@ const generateCertificate = async (req, res) => {
     const results = await Result.find({ username, courseName });
 
     if (results.length === 0) {
-      return res.status(404).json({ message: "No results found." });
+      return res.status(404).json({ message: "Sorry you have not attempted any quiz in this course.." });
     }
 
     const totalTopics = 5; // You can update this if it's dynamic
