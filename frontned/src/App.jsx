@@ -1,12 +1,16 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import Adminlogin from "./pages/Adminlogin";
+import AdminDashboard from "./pages/ADMIN/AdminDashboard";
+import AdminRegistration from "./pages/ADMIN/AdminRegistration";
+import Adminlogin from "./pages/ADMIN/Adminlogin";
 import Userlogin from "./pages/Userlogin";
 import UserDashboard from "./pages/UserDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import UserList from './pages/ADMIN/UserList';
+import CourseList from './pages/ADMIN/courselist';
+import AddTopic from './pages/ADMIN/AddTopic';
+import AddQuestion from "./pages/ADMIN/AddQuestion";
 import UserRegistration from "./pages/UserRegistration";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
-import AdminRegistration from "./pages/AdminRegistration";
 import CourseTopics from "./pages/CourseTopics";
 import Questions from "./pages/Questions";
 import Result from "./pages/Result";
@@ -37,6 +41,10 @@ function App() {
     
         <Route path ="/leaderboard" element ={<LeaderBoard/>}/>
        <Route path ="/certificate" element ={<Certificate/>} />
+       <Route path ="/UserList" element ={<UserList/>} />
+       <Route path ="/CourseList" element ={<CourseList/>} />
+       <Route path="/add-topic/:courseName" element={<AddTopic />} />
+       <Route path="/add-question/:courseName" element={<AddQuestion />} />
       </Routes>
     </Router>
   );

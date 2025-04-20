@@ -141,6 +141,22 @@ body {
   border-radius: 8px;
 }
 
+/* Sign Out Button */
+.signout {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 45%;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.signout:hover {
+  background-color: lightskyblue;
+}
+
 /* Features Grid */
 .features-grid {
   display: grid;
@@ -179,5 +195,25 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Sidebar Adjustment for Smaller Screens */
+@media (max-width: 800px) {
+  .sidebar {
+    width: 180px;
+  }
+
+  .main-content {
+    margin-left: 180px;
+    padding: 20px;
+  }
+
+  .nav-link {
+    font-size: 16px;
+  }
+
+  .dashboard-image {
+    max-width: 100%;
   }
 }

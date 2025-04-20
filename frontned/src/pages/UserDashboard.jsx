@@ -11,7 +11,8 @@ const UserDashboard = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/#/");
+    alert("User signed out successfully");
+    navigate("/userlogin");
   };
 
   return (
@@ -23,9 +24,8 @@ const UserDashboard = () => {
           <li className="nav-item"><Link to="/leaderboard" className="nav-link">Leaderboard</Link></li>
           <li className="nav-item"><Link to="/certificate" className="nav-link">Certificate</Link></li>
           <li className="nav-item"><Link to="/analytics" className="nav-link">Analytics</Link></li>
-          </ul>
-          <button className="logout-button" onClick={handleLogout}>Logout</button>
-        
+        </ul>
+        <button className="logout-button" onClick={handleLogout}>Logout</button>
       </aside>
 
       <main className="main-content">

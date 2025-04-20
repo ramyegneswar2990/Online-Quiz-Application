@@ -14,6 +14,7 @@ const courses = [
   { name: "Python Programming", path: "/courses/Python Programming", icon: <FaPython />, desc: "Explore Python for AI, ML, and development." },
   { name: "Java Programming", path: "/courses/Java Programming", icon: <FaJava />, desc: "Master Java for backend and app development." },
   { name: "C Programming", path: "/courses/C Programming", icon: <FaCuttlefish />, desc: "Fundamentals of C programming." }
+  
 ];
 
 const Courses = () => {
