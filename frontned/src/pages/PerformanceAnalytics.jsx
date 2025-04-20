@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Link, useNavigate } from "react-router-dom";
-import "./PerformanceAnalytics.css"; // Optional styling
+import "./PerformanceAnalytics.css";
 
 const data = [
   { name: "Week 1", score: 60 },

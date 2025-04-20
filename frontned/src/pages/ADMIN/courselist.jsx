@@ -7,9 +7,9 @@ import './courselist.css';
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
   const [newCourseName, setNewCourseName] = useState("");
-  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCourses();
@@ -25,82 +25,66 @@ const CourseList = () => {
   };
 
   const handleAddCourse = async (e) => {
-         e.preventDefault();
-         if (!newCourseName.trim()) {
-               setError("Course name is required!");
-               setIsSubmitted(true);
-           return;
-         }
+    e.preventDefault();
+    if (!newCourseName.trim()) {
+      setError("Course name is required!");
+      setIsSubmitted(true);
+      return;
+    }
     try {
       await axios.post("http://localhost:5000/api/courses/addcourse", {
         name: newCourseName,
       });
       setNewCourseName("");
+      setError("");
       setIsSubmitted(false);
       fetchCourses();
     } catch (error) {
-      //console.error("Error adding course", error);
       setIsSubmitted(true);
-      if (error.response && error.response.data && error.response.data.message) {
-        // If backend sends a specific error message
+      if (error.response?.data?.message) {
         setError(error.response.data.message);
       } else {
-        // Fallback generic error
-        setError("Something went wrong while adding the topic. Please try again.");
+        setError("Something went wrong while adding the course. Please try again.");
       }
     }
   };
 
   return (
-    <div className="centered-content"> {/* <-- Apply the class here */}
-    <Sidebar />
-      <div style={{ padding: "20px", width: "100%", maxWidth: "600px" }}>
-        <h2>📚 Course Management</h2>
+    <div className="course-page">
+      <Sidebar />
+      <div className="centered-content">
+        <div className="main-container">
+          <h2>📚 Course Management</h2>
 
-        {/* Display All Courses */}
-        {courses.map((course) => (
-          <div
-            key={course.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "15px",
-              marginBottom: "20px",
-            }}
-          >
-            <h3>📘 {course.name}</h3>
-
-            {/* Navigation Buttons */}
-            <div style={{ display: "flex", gap: "10px", marginTop: "10px", justifyContent: "center" }}>
-              <button onClick={() => navigate(`/add-topic/${course.name}`)}>
-                ➕ Add Topic
-              </button>
-              <button onClick={() => navigate(`/add-question/${course.name}`)}>
-                ➕ Add Question
-              </button>
-            </div>
+          {/* Course List */}
+          <div className="course-list">
+            {courses.map((course) => (
+              <div className="course-box" key={course.id}>
+                <h3>📘 {course.name}</h3>
+                <div className="button-group">
+                  <button onClick={() => navigate(`/add-topic/${course.name}`)}>
+                    ➕ Add Topic
+                  </button>
+                  <button onClick={() => navigate(`/add-question/${course.name}`)}>
+                    ➕ Add Question
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
 
-        {/* Add Course Section */}
-        <div
-          style={{
-            marginTop: "40px",
-            borderTop: "1px solid #999",
-            paddingTop: "20px",
-          }}
-        >
-          <h3>📘 Add New Course</h3>
-          {isSubmitted && error && <p className="error-message">{error}</p>}
-          <input
-            type="text"
-            placeholder="Course Name"
-            value={newCourseName}
-
-            onChange={(e) => setNewCourseName(e.target.value)}
-            
-          />
-            
-          <button onClick={handleAddCourse}>➕ Add Course</button>
+          {/* Add New Course */}
+          <form className="add-course-form" onSubmit={handleAddCourse}>
+            <h3>📘 ➕ Add New Course</h3>
+            {isSubmitted && error && <p className="error-message">{error}</p>}
+            <input
+              type="text"
+              placeholder="Course Name"
+              value={newCourseName}
+              onChange={(e) => setNewCourseName(e.target.value)}
+            />
+            <button type="submit">Add Course</button>
+          </form>
         </div>
       </div>
     </div>

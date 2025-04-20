@@ -3,27 +3,32 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Leaderboard.css";
 
-const subjects = [
-  "Operating Systems (OS)",
-  "Computer Networks (CN)",
-  "Software Engineering (SE)",
-  "Aptitude",
-  "Data Structures and Algorithms",
-  "C++ Programming",
-  "Python Programming",
-  "Java Programming",
-  "C Programming",
-];
-
 const LeaderboardPage = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [leaderboard, setLeaderboard] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [loadingCourses, setLoadingCourses] = useState(true);
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
   useEffect(() => {
     if (selectedCourse) {
       fetchLeaderboard(selectedCourse);
     }
   }, [selectedCourse]);
+
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/courses/");
+      setCourses(response.data);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setLoadingCourses(false);
+    }
+  };
 
   const fetchLeaderboard = async (courseName) => {
     try {
@@ -61,8 +66,8 @@ const LeaderboardPage = () => {
             className="course-select"
           >
             <option value="">-- Select a Course --</option>
-            {subjects.map((subject, idx) => (
-              <option key={idx} value={subject}>{subject}</option>
+            {courses.map((course, idx) => (
+              <option key={idx} value={course.name}>{course.name}</option>
             ))}
           </select>
         </div>

@@ -12,7 +12,7 @@ const UserDashboard = () => {
   const handleLogout = () => {
     localStorage.clear();
     alert("User signed out successfully");
-    navigate("/userlogin");
+    navigate("/");
   };
 
   return (

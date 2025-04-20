@@ -1,32 +1,43 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom"; // ✅ Import Link and useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import "./Certificate.css";
-
-const courses = [
-  "Operating Systems (OS)",
-  "Computer Networks (CN)",
-  "Software Engineering (SE)",
-  "Aptitude",
-  "Data Structures and Algorithms",
-  "C++ Programming",
-  "Python Programming",
-  "Java Programming",
-  "C Programming"
-];
 
 const Certificate = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [username, setUsername] = useState(null);
+  const [courses, setCourses] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [loadingCourses, setLoadingCourses] = useState(true);
 
-  const navigate = useNavigate(); // ✅ for redirecting after logout
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername);
+    fetchCourses();
   }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/courses/");
+      console.log("Fetched Courses:", response.data);
+
+      // Expecting course objects like { name: "Python" }
+      if (Array.isArray(response.data)) {
+        setCourses(response.data);
+      } else {
+        console.warn("Unexpected response format:", response.data);
+        setCourses([]);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      setCourses([]);
+    } finally {
+      setLoadingCourses(false);
+    }
+  };
 
   const handleDownload = async () => {
     if (!username) {
@@ -84,7 +95,7 @@ const Certificate = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login"); // redirect to login page
+    navigate("/login");
   };
 
   return (
@@ -119,11 +130,15 @@ const Certificate = () => {
             className="course-dropdown"
           >
             <option value="">Select a Course</option>
-            {courses.map((course, index) => (
-              <option key={index} value={course}>
-                {course}
-              </option>
-            ))}
+            {loadingCourses ? (
+              <option disabled>Loading courses...</option>
+            ) : (
+              courses.map((course, index) => (
+                <option key={index} value={course.name}>
+                  {course.name}
+                </option>
+              ))
+            )}
           </select>
 
           <button onClick={handleDownload} className="download-btn">
