@@ -21,7 +21,7 @@ const Sidebar = () => {
     <div className="top-navbar">
       <div className="navbar-left">
 
-        <Link to="/AdminDashboard" className="logo">Admin Panel</Link>
+        {/* <Link to="/AdminDashboard" className="logo">Admin Panel</Link> */}
 
         <span className="logo"> <Link to="/AdminDashboard" className="user-link">Admin Panel</Link></span>
 
