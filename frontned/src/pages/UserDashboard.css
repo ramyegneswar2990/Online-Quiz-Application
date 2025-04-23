@@ -75,7 +75,12 @@ body {
   margin-left: 220px;
   padding: 30px;
   flex: 1;
-  overflow-y: auto;
+  overflow-y: scroll; /* Ensure content is scrollable */
+  scrollbar-width: none;  /* For Firefox */
+}
+
+.main-content::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
 }
 
 /* Intro Section */

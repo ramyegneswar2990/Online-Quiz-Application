@@ -2835,61 +2835,6 @@
           ]
         }
       ]
-    },
-    {
-      "id": 1744921900213,
-      "name": "Data Science",
-      "topics": [
-        {
-          "id": 1744922229361,
-          "name": "Introduction to Data Science",
-          "questions": [
-            {
-              "id": 1744922641715,
-              "question": "What is Data Science?",
-              "options": [
-                "Science of data",
-                "Science of machines",
-                "Science of computation",
-                "None"
-              ],
-              "answer": "Science of data"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": 1744921958488,
-      "name": "AI",
-      "topics": [
-        {
-          "id": 1744924971184,
-          "name": "A* Algorithm",
-          "questions": []
-        }
-      ]
-    },
-    {
-      "id": 1744925021476,
-      "name": "FULL STACK",
-      "topics": [
-        {
-          "id": 1744925750947,
-          "name": "REACT",
-          "questions": []
-        },
-        {
-          "id": 1744958127473,
-          "name": "Node Js",
-          "questions": []
-        }
-      ]
-    },
-    {
-      "id": 1745139844099,
-      "name": "DBMS",
-      "topics": []
     }
   ]
 }

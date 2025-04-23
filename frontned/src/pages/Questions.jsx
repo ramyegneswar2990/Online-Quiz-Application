@@ -10,7 +10,7 @@ const Questions = () => {
   const [answers, setAnswers] = useState({});
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const [timeLeft, setTimeLeft] = useState(100); // Timer in seconds
+  const [timeLeft, setTimeLeft] = useState(180); // Timer in seconds
 
   useEffect(() => {
     if (timeLeft <= 0) {
