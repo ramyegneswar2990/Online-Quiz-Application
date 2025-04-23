@@ -25,9 +25,9 @@ const UserLogin = () => {
 
                localStorage.setItem("token", token);
                localStorage.setItem("user", JSON.stringify(user));
-              // console.log(user);
+               localStorage.setItem("userId",user.id);
                localStorage.setItem("username", user.name);
-
+               
               alert("User Logged In Successfully");
               navigate("/UserDashboard");
              } else {
@@ -55,9 +55,9 @@ const UserLogin = () => {
                     <label>Password:</label>
                     <input type="password" name="password" value={formData.password} onChange={handleChange} required />
                 </div>
-                <button type="submit" className="submit-btn">Login</button>
+                <button type="submit" className="submitbtn">Login</button>
             </form>
-            <p className="switch-auth">
+            <p className="switchauth">
                 Don't have an account? <Link to="/UserRegistration">Register</Link>
             </p>
             </div>

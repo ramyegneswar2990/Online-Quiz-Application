@@ -56,22 +56,22 @@ const CourseList = () => {
         <div className="main-container">
           <h2>📚 Course Management</h2>
 
-          {/* Course List */}
-          <div className="course-list">
-            {courses.map((course) => (
-              <div className="course-box" key={course.id}>
-                <h3>📘 {course.name}</h3>
-                <div className="button-group">
-                  <button onClick={() => navigate(`/add-topic/${course.name}`)}>
-                    ➕ Add Topic
-                  </button>
-                  <button onClick={() => navigate(`/add-question/${course.name}`)}>
-                    ➕ Add Question
-                  </button>
-                </div>
-              </div>
-            ))}
+      {/* Course List */}
+      <div className="course-list">
+        {courses.map((course) => (
+          <div className="course-box" key={course.id}>
+            <h3>📘 {course.name}</h3>
+            <div className="button-group">
+              <button onClick={() => navigate(`/add-topic/${course.name}`)}>
+                ➕ Add Topic
+              </button>
+              <button onClick={() => navigate(`/add-question/${course.name}`)}>
+                ➕ Add Question
+              </button>
+            </div>
           </div>
+        ))}
+      </div>
 
           {/* Add New Course */}
           <form className="add-course-form" onSubmit={handleAddCourse}>

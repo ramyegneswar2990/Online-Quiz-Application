@@ -75,7 +75,7 @@ const LeaderboardPage = () => {
         </div>
 
         {leaderboard.length > 0 ? (
-          <div className="table-container">
+          <div className="tablecontainer">
             <table className="leaderboard-table">
               <thead>
                 <tr>

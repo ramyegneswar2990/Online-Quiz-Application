@@ -29,6 +29,7 @@ const AdminRegistration = () => {
 
   return (
     <div className="admin-register-container">
+      <div className="admin-register-box">
       <h2>Admin Registration</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
@@ -70,6 +71,7 @@ const AdminRegistration = () => {
       <p className="switch-auth">
         Already have an account? <Link to="/AdminLogin">Login</Link>
       </p>
+    </div>
     </div>
   );
 };

@@ -6,12 +6,22 @@
   height: 100vh; /* Full screen height */
   width: 100vw; /* Full screen width */
   text-align: center;
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Soft white gradient */
+  background: #ECE5D8; /* Soft white gradient */
   color: #333;
   padding: 20px;
   font-family: 'Poppins', sans-serif;
   margin: 0;
   overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+.admin-register-box {
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  background: #82a8b8; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  text-align: center;
 }
 
 h2 {

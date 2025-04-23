@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="glass-card">
-        <h1>Welcome to the Quiz Portal</h1>
+        <h1 style={{ color: "black" }}>Welcome to the Quiz Portal</h1>
         <p>Challenge yourself with exciting quizzes and track your progress!</p>
         <div className="buttons">
           <Link to="/Userlogin" style={{ textDecoration: "none" }}>

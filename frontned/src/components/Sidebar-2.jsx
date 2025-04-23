@@ -14,19 +14,19 @@ const Sidebar2 = () => {
     <aside className="sidebar">
       <ul className="nav-list">
         <li className="nav-item">
-          <Link to="/UserDashboard" className="nav-link">Home</Link>
+          <Link to="/UserDashboard" className="navlink">Home</Link>
         </li>
         <li className="nav-item">
-          <Link to="/courses" className="nav-link">Courses</Link>
+          <Link to="/courses" className="navlink">Courses</Link>
         </li>
         <li className="nav-item">
-          <Link to="/leaderboard" className="nav-link">Leaderboard</Link>
+          <Link to="/leaderboard" className="navlink">Leaderboard</Link>
         </li>
         <li className="nav-item">
-          <Link to="/certificate" className="nav-link">Certificate</Link>
+          <Link to="/certificate" className="navlink">Certificate</Link>
         </li>
         <li className="nav-item">
-          <Link to="/analytics" className="nav-link">Analytics</Link>
+          <Link to="/analytics" className="navlink">Analytics</Link>
         </li>
       </ul>
       <button className="logout-button" onClick={handleLogout}>Logout</button>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./UserDashboard.css";
 import { FaTrophy, FaChartLine, FaQuestionCircle, FaCertificate } from "react-icons/fa";
-import quizImg from "../assets/quiz-2.jpg";
+import quizImg from "../assets/image.png";
 import Sidebar2 from "../components/Sidebar-2";
 
 const UserDashboard = () => {

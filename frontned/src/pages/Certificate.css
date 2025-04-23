@@ -1,9 +1,18 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  height: auto;
+}
+
 .dashboard-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom right, #ffffff, #f0f0f0);
+  background: #D1E0D7;
+  flex-direction: column; /* Optional: allows vertical stacking */
 }
+
 
 .certificate-container {
     position: absolute;
