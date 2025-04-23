@@ -7,19 +7,28 @@ const Sidebar = () => {
 
   const handleSignOut = () => {
     // Add your logout logic here (like clearing localStorage or cookies)
+
+    alert("Admin signed out successfully");
+    navigate('/adminlogin');
+
     // For now, just redirect to login
     alert("admin signout successfully");
     navigate('/');
+
   };
 
   return (
     <div className="top-navbar">
       <div className="navbar-left">
+
+        {/* <Link to="/AdminDashboard" className="logo">Admin Panel</Link> */}
+
         <span className="logo"> <Link to="/AdminDashboard" className="user-link">Admin Panel</Link></span>
+
       </div>
       <div className="navbar-right">
         <Link to="/UserList" className="user-link">User List</Link>
-        <Link to="/CourseList" className="course-link">CourseList</Link>
+        <Link to="/CourseList" className="course-link">Course List</Link>
         <button className="signout-btn" onClick={handleSignOut}>Sign Out</button>
       </div>
     </div>

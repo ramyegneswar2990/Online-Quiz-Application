@@ -51,7 +51,7 @@ const Result = () => {
         </div>
 
         <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <button onClick={() => navigate(-1)} className="back-button">
+          <button onClick={() => navigate("/courses")} className="back-button">
             Go Back
           </button>
         </div>

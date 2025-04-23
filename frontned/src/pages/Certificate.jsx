@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./Certificate.css";
+import Sidebar2 from "../components/Sidebar-2";
 
 const Certificate = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
@@ -100,8 +101,9 @@ const Certificate = () => {
 
   return (
     <div className="dashboard-container">
+      <Sidebar2/>
       {/* Sidebar */}
-      <aside className="sidebar">
+      {/* <aside className="sidebar">
         <ul className="nav-list">
           <li className="nav-item"><Link to="/UserDashboard" className="nav-link">Home</Link></li>
           <li className="nav-item"><Link to="/courses" className="nav-link">Courses</Link></li>
@@ -110,7 +112,7 @@ const Certificate = () => {
           <li className="nav-item"><Link to="/analytics" className="nav-link">Analytics</Link></li>
           <li><button className="logout-button" onClick={handleLogout}>Logout</button></li>
         </ul>
-      </aside>
+      </aside> */}
 
       {/* Main Content */}
       <div className="outbox">

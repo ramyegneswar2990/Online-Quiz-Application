@@ -6,7 +6,7 @@
   height: 100vh; /* Full screen height */
   width: 100vw; /* Full screen width */
   text-align: center;
-  background: linear-gradient(to right, #74ebd5, #9face6); 
+  background: #ECE5D8; 
   color: #333;
   padding: 20px;
   font-family: 'Poppins', sans-serif;
@@ -18,7 +18,7 @@
   width: 100%;
   max-width: 500px;
   padding: 40px;
-  background: rgba(255, 255, 255, 0.9);
+  background: #82a8b8;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   text-align: center;
@@ -57,7 +57,7 @@
 .submit-btn {
   width: 100%;
   padding: 10px;
-  background: #007bff;
+  background: #607EBC;
   color: white;
   border: none;
   border-radius: 5px;
@@ -76,9 +76,10 @@
 }
 
 .switch-auth a {
-  color: #28a745;
+  color: #000401;
   text-decoration: none;
   font-weight: bold;
+  font-size: medium;
 }
 
 .switch-auth a:hover {

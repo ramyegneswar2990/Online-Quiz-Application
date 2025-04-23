@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Courses.css";
+import Sidebar2 from "../components/Sidebar-2";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -24,8 +25,9 @@ const Courses = () => {
 
   return (
     <div className="dashboard-container">
+      <Sidebar2/>
       {/* Sidebar */}
-      <aside className="sidebar">
+      {/* <aside className="sidebar">
         <ul className="nav-list">
           <li className="nav-item"><Link to="/UserDashboard" className="nav-link">Home</Link></li>
           <li className="nav-item"><Link to="/courses" className="nav-link">Courses</Link></li>
@@ -34,7 +36,7 @@ const Courses = () => {
           <li className="nav-item"><Link to="/analytics" className="nav-link">Analytics</Link></li>
           <li><button className="logout-button">Logout</button></li>
         </ul>
-      </aside>
+      </aside> */}
 
       {/* Main Content */}
       <main className="main-content">

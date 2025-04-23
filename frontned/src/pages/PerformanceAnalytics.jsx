@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import React, { useState, useEffect } from "react"; // Import useState and useEffect
+import axios from "axios"; // Import axios
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Link, useNavigate } from "react-router-dom";
+import Sidebar2 from "../components/Sidebar-2"; // Make sure Sidebar2 is correctly imported
 import "./PerformanceAnalytics.css";
 
 const PerformanceAnalytics = () => {
@@ -23,7 +16,6 @@ const PerformanceAnalytics = () => {
     try {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
-      
 
       if (!token || !userId) {
         console.error("Token or UserId missing.");
@@ -68,34 +60,14 @@ const PerformanceAnalytics = () => {
 
   return (
     <div className="dashboard-container">
+      <Sidebar2 />
       {/* Sidebar */}
-      <aside className="sidebar">
-        <ul className="nav-list">
-          <li className="nav-item">
-            <Link to="/UserDashboard" className="nav-link">Home</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/courses" className="nav-link">Courses</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/leaderboard" className="nav-link">Leaderboard</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/certificate" className="nav-link">Certificate</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/analytics" className="nav-link">Analytics</Link>
-          </li>
-          <li>
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
-          </li>
-        </ul>
-      </aside>
 
       {/* Analytics Main Section */}
-      <h2>Hello</h2>
+      
+      <h2 className="analytics-title">📊 Performance Analytics</h2>
       <div className="analytics-container">
-        <h2 className="analytics-title">📊 Performance Analytics</h2>
+        
         <p className="analytics-subtitle">
           Track your quiz progress and identify areas to improve.
         </p>

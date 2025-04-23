@@ -1,117 +1,3 @@
-// import { useEffect, useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import "./Questions.css"; // Import your styles
-
-// const Questions = () => {
-//   const { courseName, topicId } = useParams();
-//   const navigate = useNavigate();
-
-//   const [questions, setQuestions] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [answers, setAnswers] = useState({});
-
-//   useEffect(() => {
-//     const fetchQuestions = async () => {
-//       try {
-//         const response = await fetch(
-//           `http://localhost:5000/api/courses/questions/${courseName}/${topicId}`
-//         );
-//         if (!response.ok) throw new Error("Failed to fetch questions");
-
-//         const data = await response.json();
-//         setQuestions(data);
-//       } catch (error) {
-//         console.error("Error fetching questions:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchQuestions();
-//   }, [courseName, topicId]);
-
-//   const handleOptionChange = (questionId, selectedOption) => {
-//     setAnswers((prev) => ({
-//       ...prev,
-//       [questionId]: selectedOption,
-//     }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     if (Object.keys(answers).length !== questions.length) {
-//       alert("Please answer all questions before submitting.");
-//       return;
-//     }
-
-//     let score = 0;
-//     questions.forEach((q, index) => {
-//       if (answers[index] === q.answer) {
-//         score++;
-//       }
-//     });
-
-//     navigate("/result", {
-//       state: {
-//         score,
-//         total: questions.length,
-//         questions,
-//         answers,
-//       },
-//     });
-//   };
-
-//   if (loading)
-//     return (
-//       <h2 style={{ color: "white", textAlign: "center" }}>Loading...</h2>
-//     );
-
-//   return (
-//     <div className="questions-container">
-//       <div className="questions-box">
-//         <h1 className="questions-title">Quiz: {courseName}</h1>
-
-//         <form onSubmit={handleSubmit}>
-//           {questions.map((q, index) => (
-//             <div key={index} className="question-block">
-//               <p className="question-text">
-//                 {index + 1}. {q.question}
-//               </p>
-
-//               {q.options.map((opt, idx) => (
-//                 <label key={idx} className="option-label">
-//                   <input
-//                     type="radio"
-//                     name={`question-${index}`}
-//                     value={opt}
-//                     checked={answers[index] === opt}
-//                     onChange={() => handleOptionChange(index, opt)}
-//                     className="option-radio"
-//                   />
-//                   <span
-//                     className={`custom-circle ${
-//                       answers[index] === opt ? "selected" : ""
-//                     }`}
-//                   ></span>
-//                   {opt}
-//                 </label>
-//               ))}
-//             </div>
-//           ))}
-
-//           <div style={{ textAlign: "center", marginTop: "20px" }}>
-//             <button type="submit" className="submit-button">
-//               Submit
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Questions;
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Questions.css";
@@ -124,9 +10,8 @@ const Questions = () => {
   const [answers, setAnswers] = useState({});
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const [timeLeft, setTimeLeft] = useState(100); // ⏰ TIMER: 3 mins
+  const [timeLeft, setTimeLeft] = useState(100); // Timer in seconds
 
-  // ⏰ TIMER: Countdown effect
   useEffect(() => {
     if (timeLeft <= 0) {
       alert("Time's up! Practise Well.");
@@ -237,13 +122,12 @@ const Questions = () => {
 
   return (
     <div className="questions-container">
+      <div className="sticky-timer-card">
+        🕒 <strong>Time Left:</strong> {formatTime(timeLeft)}
+      </div>
+
       <div className="questions-box">
-        <div className="questions-header">
-          <h1 className="questions-title">Quiz: {courseName} </h1>
-          <div className="timer" style={{ color: "red", fontWeight: "bold", fontSize: "18px", position: "absolute", right: "30px", top: "20px" }}>
-          🕒 Time Left: {formatTime(timeLeft)}
-          </div>
-        </div>
+        <h1 className="questions-title">Quiz: {courseName}</h1>
 
         <form onSubmit={handleSubmit}>
           {questions.map((q, index) => (

@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from '../../components/Sidebar';
 import './AdminDashboard.css';
-import dashboardImage from '../../assets/quiz.jpg'; // Ensure correct path
+import dashboardImage from '../../assets/quiz-5.jpg'; // Ensure correct path
 
 const AdminDashboard = () => {
   return (
