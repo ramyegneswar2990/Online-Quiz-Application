@@ -2,7 +2,7 @@
   "courses": [
     {
       "id": 1,
-      "name": "Computer Networks (CN)",
+      "name": "COMPUTER NETWORK",
       "topics": [
         {
           "id": 1,
@@ -21,7 +21,7 @@
             },
             {
               "id": 2,
-              "question": "Which protocol is used for email?",
+              "question": "Which protocol is used for email  ?",
               "options": [
                 "HTTP",
                 "SMTP",
@@ -54,7 +54,7 @@
             },
             {
               "id": 5,
-              "question": "Which protocol provides reliable data transfer?",
+              "question": "Which protocol provides reliable data transfer ?",
               "options": [
                 "TCP",
                 "UDP",
@@ -143,7 +143,7 @@
             },
             {
               "id": 2,
-              "question": "Which protocol is used for secure web browsing?",
+              "question": "Which protocol is used for secure web browsing ?",
               "options": [
                 "HTTP",
                 "HTTPS",
@@ -308,17 +308,12 @@
               "answer": "Identifies a wireless network"
             }
           ]
-        },
-        {
-          "id": 1744924367876,
-          "name": "TCP",
-          "questions": []
         }
       ]
     },
     {
       "id": 2,
-      "name": "Operating Systems (OS)",
+      "name": "Operating System (OS)",
       "topics": [
         {
           "id": 1,
@@ -330,7 +325,7 @@
               "options": [
                 "A program in execution",
                 "A programming language",
-                "An input device",
+                "A input device",
                 "A memory location"
               ],
               "answer": "A program in execution"
@@ -359,7 +354,7 @@
             },
             {
               "id": 4,
-              "question": "What is the first process executed by the OS?",
+              "question": "What is the first process executed by the OS ?",
               "options": [
                 "Init",
                 "Shell",
@@ -453,7 +448,7 @@
                 "A method to organize data",
                 "A programming language",
                 "A part of the CPU",
-                "An input device"
+                "A input device"
               ],
               "answer": "A method to organize data"
             },
@@ -624,11 +619,6 @@
               "answer": "Direct Memory Access"
             }
           ]
-        },
-        {
-          "id": 1744924287492,
-          "name": "",
-          "questions": []
         }
       ]
     },
@@ -1578,7 +1568,7 @@
     },
     {
       "id": 6,
-      "name": "Python Programming",
+      "name": "Python Program",
       "topics": [
         {
           "id": 1,
@@ -1887,7 +1877,7 @@
         },
         {
           "id": 1745181267071,
-          "name": "Iterators",
+          "name": "Iterator",
           "questions": []
         }
       ]

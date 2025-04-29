@@ -6,8 +6,8 @@ import Userlogin from "./pages/Userlogin";
 import UserDashboard from "./pages/UserDashboard";
 import UserList from './pages/ADMIN/UserList';
 import CourseList from './pages/ADMIN/courselist';
-import AddTopic from './pages/ADMIN/AddTopic';
-import AddQuestion from "./pages/ADMIN/AddQuestion";
+import TopicList from "./pages/ADMIN/TopicList";
+import QuestionList from "./pages/ADMIN/QuestionList";
 import UserRegistration from "./pages/UserRegistration";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
@@ -18,7 +18,7 @@ import Result from "./pages/Result";
 import LeaderBoard from "./pages/LeaderBoard";
 import Certificate from "./pages/Certificate";
 import PerformanceAnalytics from "./pages/PerformanceAnalytics";
-// import Protected from "./components/Protected";
+
 
 function App() {
   return (
@@ -43,8 +43,10 @@ function App() {
        <Route path ="/certificate" element ={<Certificate/>} />
        <Route path ="/UserList" element ={<UserList/>} />
        <Route path ="/CourseList" element ={<CourseList/>} />
-       <Route path="/add-topic/:courseName" element={<AddTopic />} />
-       <Route path="/add-question/:courseName" element={<AddQuestion />} />
+       <Route path="/courses/:courseName/topics" element={<TopicList />} />
+       <Route path="/courses/:courseName/questions" element={<QuestionList />} />
+ 
+
       </Routes>
     </Router>
   );

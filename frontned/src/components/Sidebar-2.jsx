@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaHome, FaBook, FaTrophy, FaCertificate, FaChartBar, FaSignOutAlt } from 'react-icons/fa';
 import './Sidebar-2.css';
 
 const Sidebar2 = () => {
@@ -14,22 +15,34 @@ const Sidebar2 = () => {
     <aside className="sidebar">
       <ul className="nav-list">
         <li className="nav-item">
-          <Link to="/UserDashboard" className="navlink">Home</Link>
+          <Link to="/UserDashboard" className="navlink">
+            <FaHome className="nav-icon" /> Home
+          </Link>
         </li>
         <li className="nav-item">
-          <Link to="/courses" className="navlink">Courses</Link>
+          <Link to="/courses" className="navlink">
+            <FaBook className="nav-icon" /> Courses
+          </Link>
         </li>
         <li className="nav-item">
-          <Link to="/leaderboard" className="navlink">Leaderboard</Link>
+          <Link to="/leaderboard" className="navlink">
+            <FaTrophy className="nav-icon" /> Leaderboard
+          </Link>
         </li>
         <li className="nav-item">
-          <Link to="/certificate" className="navlink">Certificate</Link>
+          <Link to="/certificate" className="navlink">
+            <FaCertificate className="nav-icon" /> Certificate
+          </Link>
         </li>
         <li className="nav-item">
-          <Link to="/analytics" className="navlink">Analytics</Link>
+          <Link to="/analytics" className="navlink">
+            <FaChartBar className="nav-icon" /> Analytics
+          </Link>
         </li>
       </ul>
-      <button className="logout-button" onClick={handleLogout}>Logout</button>
+      <button className="logout-button" onClick={handleLogout}>
+        <FaSignOutAlt className="nav-icon" /> Logout
+      </button>
     </aside>
   );
 };

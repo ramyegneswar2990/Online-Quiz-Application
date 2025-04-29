@@ -65,9 +65,9 @@ const PerformanceAnalytics = () => {
 
       {/* Analytics Main Section */}
       
-      <h2 className="analytics-title">📊 Performance Analytics</h2>
+      {/* <h2 className="analytics-title">📊 Performance Analytics</h2> */}
       <div className="analytics-container">
-        
+      <h2 className="analytics-title">📊 Performance Analytics</h2>
         <p className="analytics-subtitle">
           Track your quiz progress and identify areas to improve.
         </p>
