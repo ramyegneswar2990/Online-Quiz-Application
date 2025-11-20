@@ -1,15 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "frontned/package.json",
-      "use": "@vercel/static-build",
-      "config": { 
-        "distDir": "dist",
-        "outputDirectory": "dist"
-      }
-    }
-  ],
+  "buildCommand": "cd frontned && npm install && npm run build",
+  "outputDirectory": "frontned/dist",
   "routes": [
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
