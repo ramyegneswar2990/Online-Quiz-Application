@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontned/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "frontned/dist" }
+    }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/frontned/dist/index.html" }
+  ]
+}
