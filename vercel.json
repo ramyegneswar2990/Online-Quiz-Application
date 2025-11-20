@@ -4,11 +4,14 @@
     {
       "src": "frontned/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "frontned/dist" }
+      "config": { 
+        "distDir": "dist",
+        "outputDirectory": "dist"
+      }
     }
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/frontned/dist/index.html" }
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }
