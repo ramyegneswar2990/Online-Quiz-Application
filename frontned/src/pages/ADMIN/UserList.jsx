@@ -7,11 +7,19 @@ const UserList = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/users');
+      const response = await fetch('http://localhost:5000/api/admin/users');
       const data = await response.json();
-      setUsers(data.users);
+      
+      // Handle the new response structure
+      if (data.success && data.data && data.data.users) {
+        setUsers(data.data.users);
+      } else {
+        console.error('Invalid response structure:', data);
+        setUsers([]);
+      }
     } catch (error) {
       console.error('Error fetching users:', error);
+      setUsers([]);
     }
   };
 
@@ -20,7 +28,7 @@ const UserList = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
         method: 'DELETE',
       });
 

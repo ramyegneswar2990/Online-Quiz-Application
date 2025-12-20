@@ -14,14 +14,24 @@ const UserRegistration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-           // console.log(Hello);
-            await registerUser({ ...formData, role: "user", action: "register" });
-            console.log({ ...formData, role: "user", action: "register" });
+            const response = await registerUser({ 
+                name: formData.name, 
+                email: formData.email, 
+                password: formData.password, 
+                role: "user" 
+            });
+            console.log(response.data);
 
-            alert("User Registered Successfully");
-            navigate("/Userlogin"); // Redirect after successful registration
+            // Check if response is successful
+            if (response.data && response.data.success) {
+                alert("User Registered Successfully");
+                navigate("/Userlogin"); // Redirect after successful registration
+            } else {
+                alert("Registration failed: " + (response.data?.message || "Unknown error"));
+            }
         } catch (error) {
             console.error("Registration failed", error);
+            alert("Registration failed: " + (error.response?.data?.message || "Network error"));
         }
     };
 

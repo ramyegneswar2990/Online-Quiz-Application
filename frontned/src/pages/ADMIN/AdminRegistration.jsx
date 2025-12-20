@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { registerUser } from "../../services/api";
+import { registerAdmin } from "../../services/api";
 import { useNavigate, Link } from "react-router-dom";
 import "./AdminRegistration.css";
 
@@ -14,12 +14,20 @@ const AdminRegistration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerUser({ ...formData, action: "register", role: "admin" });
-      alert("Admin Registered Successfully");
+      const response = await registerAdmin({ 
+        name: formData.name, 
+        email: formData.email, 
+        password: formData.password 
+      });
+      console.log(response.data);
 
-      // Redirect to admin login page
-      navigate("/AdminLogin");
-
+      // Check if response is successful
+      if (response.data && response.data.success) {
+        alert("Admin Registered Successfully");
+        navigate("/AdminLogin");
+      } else {
+        alert("Registration failed: " + (response.data?.message || "Unknown error"));
+      }
     } catch (error) {
       const backendMessage = error.response?.data?.message || "Registration failed";
       console.error("Registration failed:", backendMessage);

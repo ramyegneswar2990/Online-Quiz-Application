@@ -5,6 +5,7 @@ import Adminlogin from "./pages/ADMIN/Adminlogin";
 import Userlogin from "./pages/Userlogin";
 import UserDashboard from "./pages/UserDashboard";
 import UserList from './pages/ADMIN/UserList';
+import UserQuizScores from './pages/ADMIN/UserQuizScores';
 import CourseList from './pages/ADMIN/courselist';
 import TopicList from "./pages/ADMIN/TopicList";
 import QuestionList from "./pages/ADMIN/QuestionList";
@@ -42,6 +43,7 @@ function App() {
         <Route path ="/leaderboard" element ={<LeaderBoard/>}/>
        <Route path ="/certificate" element ={<Certificate/>} />
        <Route path ="/UserList" element ={<UserList/>} />
+       <Route path ="/UserQuizScores" element ={<UserQuizScores/>} />
        <Route path ="/CourseList" element ={<CourseList/>} />
        <Route path="/courses/:courseName/topics" element={<TopicList />} />
        <Route path="/courses/:courseName/questions" element={<QuestionList />} />

@@ -12,12 +12,10 @@ const generateCertificate = async (req, res) => {
       return res.status(404).json({ message: "Sorry you have not attempted any quiz in this course.." });
     }
 
-    const totalTopics = 5; // You can update this if it's dynamic
-    const maxScorePerTopic = 5; // Assume max score per topic is 5
-    const maxTotalScore = totalTopics * maxScorePerTopic;
-
+    // Calculate actual scores based on real quiz data
     const userTotalScore = results.reduce((acc, curr) => acc + curr.score, 0);
-    const percentage = (userTotalScore / maxTotalScore) * 100;
+    const totalPossibleScore = results.reduce((acc, curr) => acc + (curr.totalQuestions || 10), 0);
+    const percentage = totalPossibleScore > 0 ? (userTotalScore / totalPossibleScore) * 100 : 0;
 
     if (percentage < 75) {
       return res.status(403).json({
@@ -37,11 +35,10 @@ const generateCertificate = async (req, res) => {
     doc.moveDown();
     doc.text(`For successfully completing: ${courseName}`, { align: "center" });
     doc.moveDown();
-    doc.text(`Scored: ${userTotalScore}/${maxTotalScore} (${percentage.toFixed(2)}%)`, {
+    doc.text(`Scored: ${userTotalScore}/${totalPossibleScore} (${percentage.toFixed(2)}%)`, {
       align: "center"
     });
 
-   
     doc.pipe(res);
     doc.end();
   } catch (error) {

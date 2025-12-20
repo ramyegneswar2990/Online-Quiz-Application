@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaUserCog, FaUsers, FaBookOpen, FaSignOutAlt } from 'react-icons/fa'; // 🎯 Added Icons
+import { FaUserCog, FaUsers, FaBookOpen, FaSignOutAlt, FaChartBar } from 'react-icons/fa'; // 🎯 Added Icons
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -30,6 +30,9 @@ const Sidebar = () => {
       <div className="navbar-right">
         <Link to="/UserList" className="user-link">
           <FaUsers style={{ marginRight: '6px' }} /> User List
+        </Link>
+        <Link to="/UserQuizScores" className="user-link">
+          <FaChartBar style={{ marginRight: '6px' }} /> Quiz Scores
         </Link>
         <Link to="/CourseList" className="course-link">
           <FaBookOpen style={{ marginRight: '6px' }} /> Course List

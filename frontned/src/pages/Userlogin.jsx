@@ -14,25 +14,27 @@ const UserLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-              const response=  await loginUser({ ...formData, action: "login", role: "user" });
-               console.log(response.data);
-        //    // Store token and user in localStorage
-             const { token, user } = response.data;
-      
-             if (token && user) {
-            
-            //    console.log("Token:", localStorage.getItem("token"));
-
-               localStorage.setItem("token", token);
-               localStorage.setItem("user", JSON.stringify(user));
-               localStorage.setItem("userId",user.id);
-               localStorage.setItem("username", user.name);
-               
-              alert("User Logged In Successfully");
-              navigate("/UserDashboard");
-             } else {
-               alert("Login failed: Invalid response from server");
-             }
+              const response = await loginUser({ email: formData.email, password: formData.password });
+              console.log(response.data);
+              
+              // Check if response is successful and has data
+              if (response.data && response.data.success && response.data.data) {
+                  const { token, user } = response.data.data;
+                  
+                  if (token && user) {
+                      localStorage.setItem("token", token);
+                      localStorage.setItem("user", JSON.stringify(user));
+                      localStorage.setItem("userId", user.id);
+                      localStorage.setItem("username", user.name);
+                      
+                      alert("User Logged In Successfully");
+                      navigate("/UserDashboard");
+                  } else {
+                      alert("Login failed: Invalid response from server");
+                  }
+              } else {
+                  alert("Login failed: " + (response.data?.message || "Unknown error"));
+              }
         } catch (error) {
           console.error("Login failed", error);
           alert("Invalid email or password");
