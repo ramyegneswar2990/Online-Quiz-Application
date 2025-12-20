@@ -1,7 +1,5 @@
 # Online Quiz Application
-
-A full-stack MERN (MongoDB, Express.js, React, Node.js) platform that enables students to take online quizzes, track their progress, and lets administrators manage courses, questions, users, and analytics.
-
+line Quiz Application is a full-stack MERN platform engineered to help B.Tech students practice core engineering topics, track their performance, and earn completion certificates. Built with a React/Vite frontend and an Express/MongoDB backend, it combines smooth user experiences for learners with powerful admin controls for course and quiz management. Users can browse curated courses, attempt timed quizzes, review detailed analytics, and download certificates when they meet eligibility criteria. Administrators get dedicated dashboards to manage users, questions, and quiz results, including a consolidated scoreboard of every learner’s attempts. Robust authentication, JWT-based sessions, and server-side validation keep the ecosystem secure. This repo contains everything needed to run the application locally or deploy it to modern hosting providers, along with documentation, API references, and screenshots for a quick tour.
 > **Live Repository:** https://github.com/ramyegneswar2990/Online-Quiz-Application
 
 ---
