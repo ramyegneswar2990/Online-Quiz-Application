@@ -152,14 +152,13 @@ npm run dev
 
 ## Screenshots
 Screenshots are stored under `docs/screenshots/`. Save the PNG files using the names below so they render automatically:
+<img width="1891" height="899" alt="Screenshot 2025-12-20 173540" src="https://github.com/user-attachments/assets/e4bbe056-d2c4-4458-a0c7-fa4c17feff54" />
+<img width="1612" height="893" alt="Screenshot 2025-12-20 173601" src="https://github.com/user-attachments/assets/91529616-58fb-4a81-8986-1789acd81f0c" />
+<img width="1895" height="880" alt="Screenshot 2025-12-20 173638" src="https://github.com/user-attachments/assets/4034097c-365f-4a1d-b21f-e93ee3e46d01" />
+<img width="1813" height="802" alt="Screenshot 2025-12-20 173657" src="https://github.com/user-attachments/assets/598629df-80d7-4ab0-81f4-80cd9dfddb55" />
+<img width="1681" height="821" alt="Screenshot 2025-12-20 173730" src="https://github.com/user-attachments/assets/63d4cbed-040e-4d4a-856c-74f960ce3dd4" />
 
-| Feature | File Name | Preview |
-|---------|-----------|---------|
-| Learner Dashboard | `docs/screenshots/01-user-dashboard.png` | ![Learner Dashboard](docs/screenshots/01-user-dashboard.png) |
-| Quiz Attempt (Computer Network) | `docs/screenshots/02-quiz-attempt.png` | ![Quiz Attempt](docs/screenshots/02-quiz-attempt.png) |
-| Admin Dashboard | `docs/screenshots/03-admin-dashboard.png` | ![Admin Dashboard](docs/screenshots/03-admin-dashboard.png) |
-| Course Management | `docs/screenshots/04-course-management.png` | ![Course Management](docs/screenshots/04-course-management.png) |
-| Catalog View | `docs/screenshots/05-course-catalog.png` | ![Course Catalog](docs/screenshots/05-course-catalog.png) |
+
 
 > Tip: simply copy the PNGs provided in the `/docs/screenshots` folder (or drag them into that folder) and keep the same file names.
 
