@@ -151,13 +151,17 @@ npm run dev
 ---
 
 ## Screenshots
-Screenshots are stored under `docs/screenshots/`. Save the PNG files using the names below so they render automatically:
+ADMIN && USER Dashboards:
+<img width="1886" height="897" alt="image" src="https://github.com/user-attachments/assets/6a221f06-3e04-4c86-87d3-30b5f705cc9f" />
+<img width="1731" height="909" alt="image" src="https://github.com/user-attachments/assets/291af7ba-8655-4f41-aac9-d1e8d7e3a0a2" />
+<img width="1731" height="909" alt="image" src="https://github.com/user-attachments/assets/3cae8466-5190-489b-993c-7c92bc0e8a0d" />
+<img width="1884" height="836" alt="image" src="https://github.com/user-attachments/assets/b224e3a7-d490-4c1a-b4ca-923bb5b5d021" />
+<img width="1884" height="836" alt="image" src="https://github.com/user-attachments/assets/cfdb1318-7422-443b-b8aa-48adfea4a148" />
+<img width="1919" height="856" alt="image" src="https://github.com/user-attachments/assets/2a0fc78e-68bb-4f4d-a890-9b510e160db3" />
+<img width="1919" height="856" alt="image" src="https://github.com/user-attachments/assets/251673e3-5886-4cf2-b214-893a763b6366" />
 
-| Feature | File Name | Preview |
-|---------|-----------|---------|
-| Learner Dashboard | `docs/screenshots/01-user-dashboard.png` | ![Learner Dashboard](docs/screenshots/01-user-dashboard.png) |
-| Quiz Attempt (Computer Network) | `docs/screenshots/02-quiz-attempt.png` | ![Quiz Attempt](docs/screenshots/02-quiz-attempt.png) |
-| Admin Dashboard | `docs/screenshots/03-admin-dashboard.png` | ![Admin Dashboard](docs/screenshots/03-admin-dashboard.png) |
+|<img width="1884" height="836" alt="image" src="https://github.com/user-attachments/assets/519a54c4-9f18-408d-8e08-c1bbe91fc24a" />
+
 | Course Management | `docs/screenshots/04-course-management.png` | ![Course Management](docs/screenshots/04-course-management.png) |
 | Catalog View | `docs/screenshots/05-course-catalog.png` | ![Course Catalog](docs/screenshots/05-course-catalog.png) |
 
@@ -182,3 +186,4 @@ Screenshots are stored under `docs/screenshots/`. Save the PNG files using the n
 
 Made with ❤️ to simplify quiz management and learning outcomes.
 #
+
