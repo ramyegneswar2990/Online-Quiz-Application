@@ -119,7 +119,12 @@ VITE_API_URL=http://localhost:5000
 ---
 
 ## Running the App
-### Development mode
+### Unified mode (One command for both)
+```bash
+npm run dev
+```
+
+### Manual mode
 ```bash
 # Terminal 1 - Backend
 cd backend
@@ -129,8 +134,32 @@ npm start
 cd frontned
 npm run dev
 ```
-- Frontend default port: **5173**
+- Frontend default port: **3000** (Vite)
 - Backend default port: **5000**
+
+---
+
+## Deployment (Unified)
+This project is set up for **Unified Deployment**, meaning the backend serves the frontend.
+
+1. **Build the Frontend**:
+   ```bash
+   npm run build
+   ```
+2. **Start the Backend**:
+   ```bash
+   npm start
+   ```
+The app will be available on port **5000**.
+
+---
+
+## Database Migration
+Data has been migrated from `new course db.json` to MongoDB. To re-run migration:
+```bash
+cd backend
+node src/scripts/migrateData.js
+```
 
 ---
 
