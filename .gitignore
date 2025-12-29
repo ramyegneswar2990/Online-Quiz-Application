@@ -9,6 +9,10 @@ node_modules/
 # Production
 /build
 /dist
+frontned/dist
+backend/error.log
+backend/.env
+frontned/.env
 
 # Environment variables
 .env

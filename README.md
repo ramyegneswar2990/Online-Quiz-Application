@@ -28,7 +28,7 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) platform that enables st
 - 📊 **Analytics dashboard** highlighting user performance, leaderboard, and quiz history.
 - 🏅 **Certificate generator** for learners scoring above the eligibility threshold.
 - ⚙️ **RESTful API** secured with middleware for CRUD operations.
-- 🌐 **CORS-configured backend** ready for multiple frontend origins.
+- 🌐 **CORS-configured backend** ready for multiple frontned origins.
 
 ---
 
@@ -92,7 +92,7 @@ Online-Quiz-Application/
    cd backend
    npm install
    ```
-3. **Install frontend dependencies**
+3. **Install frontned dependencies**
    ```bash
    cd ../frontned
    npm install
@@ -101,7 +101,7 @@ Online-Quiz-Application/
 ---
 
 ## Environment Variables
-Create `.env` files inside both backend and frontend directories.
+Create `.env` files inside both backend and frontned directories.
 
 ### Backend `.env`
 ```

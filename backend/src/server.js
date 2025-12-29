@@ -2,7 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cors = require("cors");
-const path = require("path"); // Moved path import here to be available for dotenv.config()
+const path = require("path");
+const helmet = require("helmet");
+const compression = require("compression");
 
 dotenv.config({ path: path.join(__dirname, "../.env") });
 connectDB();
@@ -29,7 +31,14 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.use(helmet({
+    contentSecurityPolicy: false, // Disable CSP if it interferes with frontend or if you configure it manually
+}));
+app.use(compression());
 app.use(express.json());
+
+// Health Check
+app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
 
 // API Routes
 app.use("/api/courses", require("./routes/courseRoutes"));
@@ -42,11 +51,18 @@ app.use("/api", require("./routes/analyticsRoutes"));
 
 // Serve Frontend
 const frontendPath = path.join(__dirname, "../../frontned/dist");
-app.use(express.static(frontendPath));
+const fs = require("fs");
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
-});
+if (fs.existsSync(frontendPath)) {
+    app.use(express.static(frontendPath));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(frontendPath, "index.html"));
+    });
+} else {
+    app.get("*", (req, res) => {
+        res.status(200).send("Backend is running. Frontend build not found. Run 'npm run build' in the root.");
+    });
+}
 
 // Start Server
 app.listen(PORT, () => {
