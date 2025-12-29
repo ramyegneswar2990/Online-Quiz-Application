@@ -1,0 +1,36 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "backend/src/server.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "frontned/dist"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "backend/src/server.js"
+        },
+        {
+            "src": "/health",
+            "dest": "backend/src/server.js"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "frontned/dist/$1",
+            "check": true
+        },
+        {
+            "src": "/(.*)",
+            "status": 200,
+            "dest": "frontned/dist/index.html"
+        }
+    ]
+}
