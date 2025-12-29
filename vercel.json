@@ -6,10 +6,10 @@
             "use": "@vercel/node"
         },
         {
-            "src": "frontned/package.json",
+            "src": "package.json",
             "use": "@vercel/static-build",
             "config": {
-                "distDir": "dist"
+                "distDir": "frontned/dist"
             }
         }
     ],
@@ -23,7 +23,13 @@
             "dest": "backend/src/server.js"
         },
         {
-            "handle": "filesystem"
+            "src": "/assets/(.*)",
+            "dest": "/assets/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/$1",
+            "check": true
         },
         {
             "src": "/(.*)",
