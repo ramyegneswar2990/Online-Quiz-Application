@@ -1,5 +1,6 @@
-const User = require('../models/User'); 
-const Admin = require('../models/Admin'); 
+const mongoose = require('mongoose');
+const User = require('../models/User');
+const Admin = require('../models/Admin');
 const Result = require('../models/Result');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -11,27 +12,27 @@ exports.loginAdmin = async (req, res) => {
   try {
     // Validate input
     if (!email || !password) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Email and password are required' 
+      return res.status(400).json({
+        success: false,
+        message: 'Email and password are required'
       });
     }
 
     // Check if admin exists in Admin collection
     const admin = await Admin.findOne({ email });
     if (!admin) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Invalid email or password' 
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password'
       });
     }
 
     // Compare password
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Invalid email or password' 
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password'
       });
     }
 
@@ -43,7 +44,7 @@ exports.loginAdmin = async (req, res) => {
     );
 
     // Return success response
-    return res.status(200).json({ 
+    return res.status(200).json({
       success: true,
       message: 'Admin login successful',
       data: {
@@ -58,10 +59,10 @@ exports.loginAdmin = async (req, res) => {
     });
   } catch (error) {
     console.error('Admin login error:', error);
-    return res.status(500).json({ 
-      success: false, 
+    return res.status(500).json({
+      success: false,
       message: 'Error during login',
-      error: error.message 
+      error: error.message
     });
   }
 };
@@ -69,42 +70,62 @@ exports.loginAdmin = async (req, res) => {
 // Admin registration
 exports.registerAdmin = async (req, res) => {
   const { name, email, password } = req.body;
+  console.log("REGISTER_ATTEMPT:", { name, email, hasPassword: !!password });
 
   try {
     // Validate input
     if (!name || !email || !password) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Name, email, and password are required' 
+      console.log("REGISTER_VALIDATION_FAILED: Missing fields");
+      return res.status(400).json({
+        success: false,
+        message: 'Name, email, and password are required'
       });
     }
 
-    // Check if admin already exists in Admin collection
+    // Check if Mongo is connected
+    if (mongoose.connection.readyState !== 1) {
+      console.error("REGISTER_DB_FAIL: Not connected to MongoDB. State:", mongoose.connection.readyState);
+      return res.status(500).json({ success: false, message: "Database not connected" });
+    }
+
+    // Check if Admin model exists
+    if (!Admin) {
+      console.error("REGISTER_MODEL_FAIL: Admin model is null or undefined");
+      return res.status(500).json({ success: false, message: "Server model error" });
+    }
+
+    // Check if admin already exists
+    console.log("CHECKING_EXISTING_ADMIN...");
     const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Admin already exists with this email' 
+      console.log("REGISTER_EXISTING_ADMIN:", email);
+      return res.status(400).json({
+        success: false,
+        message: 'Admin already exists with this email'
       });
     }
 
-    // Hash password and create admin
+    // Hash password
+    console.log("HASHING_PASSWORD...");
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newAdmin = await Admin.create({ 
-      name, 
-      email, 
+
+    // Create admin
+    console.log("CREATING_ADMIN_DOC...");
+    const newAdmin = await Admin.create({
+      name,
+      email,
       password: hashedPassword
     });
+    console.log("ADMIN_CREATED_SUCCESS:", newAdmin._id);
 
-    // Generate JWT Token
+    // Generate JWT
     const token = jwt.sign(
       { id: newAdmin._id, role: newAdmin.role },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '1h' }
     );
 
-    // Return success response
-    return res.status(201).json({ 
+    return res.status(201).json({
       success: true,
       message: 'Admin registered successfully',
       data: {
@@ -118,14 +139,15 @@ exports.registerAdmin = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Admin registration error:', error);
-    return res.status(500).json({ 
-      success: false, 
+    console.error('CRITICAL_REGISTER_ERROR:', error);
+    return res.status(500).json({
+      success: false,
       message: 'Error during registration',
-      error: error.message 
+      error: error.toString(),
+      stack: error.stack
     });
   }
-}; 
+};
 
 // Controller to get all non-admin users
 exports.getAllUsers = async (req, res) => {
@@ -133,16 +155,16 @@ exports.getAllUsers = async (req, res) => {
     // Since we have separate collections, get all users from User collection
     // (Admins are in Admin collection, Users are in User collection)
     const users = await User.find({}).select('-password'); // Exclude password field
-    
-    res.status(200).json({ 
+
+    res.status(200).json({
       success: true,
       data: { users }
     });
   } catch (error) {
     console.error('Error fetching users:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Server Error' 
+      error: 'Server Error'
     });
   }
 };
@@ -169,10 +191,10 @@ exports.getAllUserQuizScores = async (req, res) => {
     const quizResults = await Result.find()
       .sort({ submittedAt: -1 }) // Sort by most recent first
       .exec();
-    
+
     // Group results by user for better organization
     const userScores = {};
-    
+
     quizResults.forEach(result => {
       if (!userScores[result.userId]) {
         userScores[result.userId] = {
@@ -181,7 +203,7 @@ exports.getAllUserQuizScores = async (req, res) => {
           quizzes: []
         };
       }
-      
+
       userScores[result.userId].quizzes.push({
         courseName: result.courseName,
         topicId: result.topicId,
@@ -191,14 +213,14 @@ exports.getAllUserQuizScores = async (req, res) => {
         submittedAt: result.submittedAt
       });
     });
-    
+
     // Convert to array and calculate overall stats for each user
     const usersWithScores = Object.values(userScores).map(user => {
       const totalQuizzes = user.quizzes.length;
       const totalScore = user.quizzes.reduce((sum, quiz) => sum + quiz.score, 0);
       const totalQuestions = user.quizzes.reduce((sum, quiz) => sum + quiz.totalQuestions, 0);
       const averagePercentage = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
-      
+
       return {
         ...user,
         totalQuizzes,
@@ -208,19 +230,19 @@ exports.getAllUserQuizScores = async (req, res) => {
         lastQuizDate: user.quizzes.length > 0 ? user.quizzes[0].submittedAt : null
       };
     });
-    
-    res.status(200).json({ 
+
+    res.status(200).json({
       success: true,
-      data: { 
+      data: {
         users: usersWithScores,
         totalResults: quizResults.length
       }
     });
   } catch (error) {
     console.error('Error fetching user quiz scores:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Server Error' 
+      error: 'Server Error'
     });
   }
 };
