@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cors = require("cors");
@@ -51,7 +52,15 @@ app.use(compression());
 app.use(express.json());
 
 // Health Check
-app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
+app.get("/api/ping", (req, res) => res.status(200).json({
+    status: "ok",
+    db: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+    env: {
+        hasMongo: !!process.env.MONGO_URI,
+        hasJwt: !!process.env.JWT_SECRET,
+        nodeEnv: process.env.NODE_ENV
+    }
+}));
 
 // API Routes
 app.use("/api/courses", require("./routes/courseRoutes"));
@@ -73,17 +82,18 @@ if (fs.existsSync(frontendPath)) {
     });
 } else {
     app.get("*", (req, res) => {
-        res.status(200).send("Backend is running. Frontend build not found. Run 'npm run build' in the root.");
+        res.status(200).send("Backend is running. Frontend build not found.");
     });
 }
 
-// Global Error Handler
+// Global Error Handler (UNMASKED for debugging)
 app.use((err, req, res, next) => {
-    console.error("Global Error Handler:", err);
+    console.error("CRITICAL ERROR:", err);
     res.status(err.status || 500).json({
         success: false,
         message: err.message || "Internal Server Error",
-        stack: process.env.NODE_ENV === 'production' ? null : err.stack
+        error: err.toString(),
+        stack: err.stack
     });
 });
 
