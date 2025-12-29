@@ -5,4 +5,4 @@ const LeaderboardSchema = new mongoose.Schema({
     totalCoursesCompleted: { type: Number, default: 0 }, // Tracks completed courses
 }, { timestamps: true });
 
-module.exports = mongoose.model("Leaderboard", LeaderboardSchema);
+module.exports = mongoose.models.Leaderboard || mongoose.model("Leaderboard", LeaderboardSchema);

@@ -19,4 +19,4 @@ const CourseSchema = new mongoose.Schema({
     topics: [TopicSchema]
 }, { timestamps: true });
 
-module.exports = mongoose.model("Course", CourseSchema);
+module.exports = mongoose.models.Course || mongoose.model("Course", CourseSchema);
