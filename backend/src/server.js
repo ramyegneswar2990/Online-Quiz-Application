@@ -22,19 +22,20 @@ app.use(async (req, res, next) => {
 });
 
 // CORS configuration
-const allowedOrigins = process.env.CORS_WHITELIST ? process.env.CORS_WHITELIST.split(',') : ['http://localhost:3000', 'http://localhost:5173'];
+const allowedOrigins = process.env.CORS_WHITELIST ? process.env.CORS_WHITELIST.split(',') : [];
 
 // Middleware
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            return callback(new Error(msg), false);
+        // Allow if no origin (same-origin, mobile, curl) OR if it's in whitelist 
+        // OR if whitelist is empty (allow all during initial setup)
+        if (!origin || allowedOrigins.includes(origin) || allowedOrigins.length === 0) {
+            return callback(null, true);
         }
-        return callback(null, true);
+
+        console.error(`CORS Blocked for origin: ${origin}`);
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -73,6 +74,16 @@ if (fs.existsSync(frontendPath)) {
         res.status(200).send("Backend is running. Frontend build not found. Run 'npm run build' in the root.");
     });
 }
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error("Global Error Handler:", err);
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || "Internal Server Error",
+        stack: process.env.NODE_ENV === 'production' ? null : err.stack
+    });
+});
 
 // Start Server
 if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
