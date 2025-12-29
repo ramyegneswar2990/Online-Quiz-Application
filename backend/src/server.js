@@ -7,9 +7,19 @@ const helmet = require("helmet");
 const compression = require("compression");
 
 dotenv.config({ path: path.join(__dirname, "../.env") });
-connectDB();
+
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Database Connection Middleware (Ensuring connection for serverless)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Database connection failed", error: error.message });
+    }
+});
 
 // CORS configuration
 const allowedOrigins = process.env.CORS_WHITELIST ? process.env.CORS_WHITELIST.split(',') : ['http://localhost:3000', 'http://localhost:5173'];
