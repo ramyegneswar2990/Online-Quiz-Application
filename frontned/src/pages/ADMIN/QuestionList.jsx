@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../services/api";
 import { FaArrowLeft, FaEdit, FaPlus } from 'react-icons/fa';
 import "./QuestionList.css"; // Make sure you have the CSS
 
@@ -21,7 +22,7 @@ const QuestionList = () => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/courses/topics/${courseName}`);
+        const response = await axios.get(`${API_BASE_URL}/api/courses/topics/${courseName}`);
         setTopics(response.data || []);
       } catch (err) {
         console.error("Error fetching course topics:", err);
@@ -35,7 +36,7 @@ const QuestionList = () => {
       if (!selectedTopicId) return;
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/courses/questions/${courseName}/${selectedTopicId}`
+          `${API_BASE_URL}/api/courses/questions/${courseName}/${selectedTopicId}`
         );
         setQuestions(response.data || []);
       } catch (err) {
@@ -64,7 +65,7 @@ const QuestionList = () => {
     }
     try {
       await axios.post(
-        `http://localhost:5000/api/courses/addcourse/${courseName}/topics/${selectedTopicId}/questions`,
+        `${API_BASE_URL}/api/courses/addcourse/${courseName}/topics/${selectedTopicId}/questions`,
         {
           question: newQuestionData.question,
           options: newQuestionData.options,
@@ -72,7 +73,7 @@ const QuestionList = () => {
         }
       );
       const response = await axios.get(
-        `http://localhost:5000/api/courses/questions/${courseName}/${selectedTopicId}`
+        `${API_BASE_URL}/api/courses/questions/${courseName}/${selectedTopicId}`
       );
       setQuestions(response.data || []);
       setNewQuestionData({ question: "", options: ["", "", "", ""], answer: "" });
@@ -101,7 +102,7 @@ const QuestionList = () => {
     }
     try {
       await axios.put(
-        `http://localhost:5000/api/courses/updatequestion/${courseName}/${selectedTopicId}/${editQuestionData.id}`,
+        `${API_BASE_URL}/api/courses/updatequestion/${courseName}/${selectedTopicId}/${editQuestionData.id}`,
         {
           question: editQuestionData.question,
           options: editQuestionData.options,
@@ -109,7 +110,7 @@ const QuestionList = () => {
         }
       );
       const response = await axios.get(
-        `http://localhost:5000/api/courses/questions/${courseName}/${selectedTopicId}`
+        `${API_BASE_URL}/api/courses/questions/${courseName}/${selectedTopicId}`
       );
       setQuestions(response.data || []);
       setEditQuestionData(null);

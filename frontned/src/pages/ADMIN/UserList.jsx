@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import "./UserList.css";
 import Sidebar from '../../components/Sidebar';
+import { API_BASE_URL } from "../../services/api";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/users');
+      const response = await fetch(`${API_BASE_URL}/api/admin/users`);
       const data = await response.json();
-      
+
       // Handle the new response structure
       if (data.success && data.data && data.data.users) {
         setUsers(data.data.users);
@@ -28,7 +29,7 @@ const UserList = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/users/${id}`, {
         method: 'DELETE',
       });
 
@@ -50,7 +51,7 @@ const UserList = () => {
     <div className="OUTER_CONTAINER">
       <Sidebar />
       <div className="INNER_CONTAINER">
-      <h2 style={{ textAlign: "center" }}>User List</h2>
+        <h2 style={{ textAlign: "center" }}>User List</h2>
 
         <table className="dashboard-table">
           <thead>

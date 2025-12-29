@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../services/api";
 import "./Questions.css";
 
 const Questions = () => {
@@ -36,7 +37,7 @@ const Questions = () => {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/courses/questions/${courseName}/${topicId}`
+          `${API_BASE_URL}/api/courses/questions/${courseName}/${topicId}`
         );
         if (!response.ok) throw new Error("Failed to fetch questions");
 
@@ -85,7 +86,7 @@ const Questions = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:5000/api/result/submit", {
+      const response = await fetch(`${API_BASE_URL}/api/result/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -147,9 +148,8 @@ const Questions = () => {
                     className="option-radio"
                   />
                   <span
-                    className={`custom-circle ${
-                      answers[index] === opt ? "selected" : ""
-                    }`}
+                    className={`custom-circle ${answers[index] === opt ? "selected" : ""
+                      }`}
                   ></span>
                   {opt}
                 </label>

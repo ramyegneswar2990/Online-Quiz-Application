@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../services/api";
 import "./Leaderboard.css";
 import Sidebar2 from "../components/Sidebar-2";
 
@@ -22,7 +23,7 @@ const LeaderboardPage = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/courses/");
+      const response = await axios.get(`${API_BASE_URL}/api/courses/`);
       setCourses(response.data);
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -33,7 +34,7 @@ const LeaderboardPage = () => {
 
   const fetchLeaderboard = async (courseName) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/leaderboard/${courseName}`);
+      const response = await axios.get(`${API_BASE_URL}/api/leaderboard/${courseName}`);
       setLeaderboard(response.data);
     } catch (error) {
       console.error("Error fetching leaderboard:", error);
@@ -42,7 +43,7 @@ const LeaderboardPage = () => {
 
   return (
     <div className="dashboard-container">
-      <Sidebar2/>
+      <Sidebar2 />
       <main className="main-content">
         <h2 className="leaderboard-title">Leaderboard Based on Courses</h2>
 

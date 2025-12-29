@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../services/api";
 import "./Certificate.css";
 import Sidebar2 from "../components/Sidebar-2";
 
@@ -22,7 +23,7 @@ const Certificate = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/courses/");
+      const response = await axios.get(`${API_BASE_URL}/api/courses/`);
       console.log("Fetched Courses:", response.data);
 
       // Expecting course objects like { name: "Python" }
@@ -53,7 +54,7 @@ const Certificate = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/certificate/${username}/${encodeURIComponent(selectedCourse)}`,
+        `${API_BASE_URL}/api/certificate/${username}/${encodeURIComponent(selectedCourse)}`,
         { responseType: "blob" }
       );
 
@@ -101,7 +102,7 @@ const Certificate = () => {
 
   return (
     <div className="dashboard-container">
-      <Sidebar2/>
+      <Sidebar2 />
       {/* Sidebar */}
       {/* <aside className="sidebar">
         <ul className="nav-list">

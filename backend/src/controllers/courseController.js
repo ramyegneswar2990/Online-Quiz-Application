@@ -1,184 +1,166 @@
-const fs = require("fs");
-const path = require("path");
-
-// 📌 Load Courses from JSON File
-const getCoursesFromFile = () => {
-    const filePath = path.join(__dirname, "../new course db.json"); // Ensure this path is correct
-    try {
-        const data = fs.readFileSync(filePath, "utf8");
-        const parsedData = JSON.parse(data);
-        return Array.isArray(parsedData) ? parsedData : parsedData.courses || [];
-    } catch (error) {
-        console.error("Error reading JSON file:", error);
-        return [];
-    }
-};
-
-const saveCoursesToFile = (courses) => {
-    const filePath = path.join(__dirname, "../new course db.json");
-    try {
-        fs.writeFileSync(filePath, JSON.stringify({ courses }, null, 2));
-    } catch (error) {
-        console.error("Error writing JSON file:", error);
-    }
-};
+const Course = require("../models/Course");
 
 // 📌 Get All Courses
-const getAllCourses = (req, res) => {
-    const courses = getCoursesFromFile();
-    res.json(courses);
+const getAllCourses = async (req, res) => {
+    try {
+        const courses = await Course.find();
+        res.json(courses);
+    } catch (error) {
+        console.error("Error fetching courses:", error);
+        res.status(500).json({ message: "Failed to fetch courses" });
+    }
 };
 
 // 📌 Get Topics by Course Name
-const getTopicsByCourse = (req, res) => {
-    const courseName = req.params.courseName.toLowerCase();
-    const courses = getCoursesFromFile();
+const getTopicsByCourse = async (req, res) => {
+    try {
+        const courseName = req.params.courseName.toLowerCase();
+        const course = await Course.findOne({ name: new RegExp(`^${courseName}$`, 'i') });
 
-    if (!Array.isArray(courses)) {
-        return res.status(500).json({ message: "Invalid courses data format" });
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        res.json(course.topics || []);
+    } catch (error) {
+        console.error("Error fetching topics:", error);
+        res.status(500).json({ message: "Failed to fetch topics" });
     }
-
-    // Find course
-    const course = courses.find((c) => c.name.toLowerCase() === courseName);
-
-    if (!course) {
-        return res.status(404).json({ message: "Course not found" });
-    }
-
-    res.json(course.topics || []);
 };
 
-const getQuestionsByTopic = (req, res) => {
-    const courseName = req.params.courseName.toLowerCase();
-    const topicId = parseInt(req.params.topicId, 10); // Convert topicId to a number
-    const courses = getCoursesFromFile();
+// 📌 Get Questions by Topic
+const getQuestionsByTopic = async (req, res) => {
+    try {
+        const courseName = req.params.courseName.toLowerCase();
+        const topicId = parseInt(req.params.topicId, 10);
+        const course = await Course.findOne({ name: new RegExp(`^${courseName}$`, 'i') });
 
-    if (!Array.isArray(courses)) {
-        return res.status(500).json({ message: "Invalid courses data format" });
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        const topic = course.topics.find((t) => t.id === topicId);
+
+        if (!topic) {
+            return res.status(404).json({ message: "Topic not found" });
+        }
+
+        res.json(topic.questions || []);
+    } catch (error) {
+        console.error("Error fetching questions:", error);
+        res.status(500).json({ message: "Failed to fetch questions" });
     }
-
-    // Find the course
-    const course = courses.find((c) => c.name.toLowerCase() === courseName);
-
-    if (!course) {
-        return res.status(404).json({ message: "Course not found" });
-    }
-
-    // Find the topic
-    const topic = course.topics.find((t) => t.id === topicId);
-
-    if (!topic) {
-        return res.status(404).json({ message: "Topic not found" });
-    }
-
-    res.json(topic.questions || []);
 };
 
 // 📌 Add Course
-const addCourse = (req, res) => {
-    const courses = getCoursesFromFile();
+const addCourse = async (req, res) => {
     const { name } = req.body;
 
     if (!name) {
         return res.status(400).json({ message: "Course name is required" });
     }
 
-    // 🔍 Check if course already exists (case-insensitive)
-    const existingCourse = courses.find(
-        (course) => course.name.toLowerCase() === name.toLowerCase()
-    );
+    try {
+        const existingCourse = await Course.findOne({ name: new RegExp(`^${name}$`, 'i') });
 
-    if (existingCourse) {
-        return res.status(409).json({ message: "Course already exists" });
+        if (existingCourse) {
+            return res.status(409).json({ message: "Course already exists" });
+        }
+
+        const newCourse = new Course({
+            id: Date.now(),
+            name,
+            topics: []
+        });
+
+        await newCourse.save();
+        res.status(201).json({ message: "Course added successfully", course: newCourse });
+    } catch (error) {
+        console.error("Error adding course:", error);
+        res.status(500).json({ message: "Failed to add course" });
     }
-
-    const newCourse = {
-        id: Date.now(),
-        name,
-        topics: []
-    };
-
-    courses.push(newCourse);
-    saveCoursesToFile(courses);
-
-    res.status(201).json({ message: "Course added successfully", course: newCourse });
 };
 
 // 📌 Add Topic to Course
-const addTopicToCourse = (req, res) => {
+const addTopicToCourse = async (req, res) => {
     const { courseName } = req.params;
     const { name } = req.body;
 
-    const courses = getCoursesFromFile();
-    const course = courses.find(c => c.name.toLowerCase() === courseName.toLowerCase());
+    try {
+        const course = await Course.findOne({ name: new RegExp(`^${courseName}$`, 'i') });
 
-    if (!course) {
-        return res.status(404).json({ message: "Course not found" });
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        const existingTopic = course.topics.find(
+            (topic) => topic.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if (existingTopic) {
+            return res.status(409).json({ message: "Topic already exists in this course" });
+        }
+
+        const newTopic = {
+            id: Date.now(),
+            name,
+            questions: []
+        };
+
+        course.topics.push(newTopic);
+        await course.save();
+
+        res.status(201).json({ message: "Topic added", topic: newTopic });
+    } catch (error) {
+        console.error("Error adding topic:", error);
+        res.status(500).json({ message: "Failed to add topic" });
     }
-
-    // 🔍 Check if the topic already exists (case-insensitive)
-    const existingTopic = course.topics.find(
-        (topic) => topic.name.toLowerCase() === name.toLowerCase()
-    );
-
-    if (existingTopic) {
-        return res.status(409).json({ message: "Topic already exists in this course" });
-    }
-
-    const newTopic = {
-        id: Date.now(),
-        name,
-        questions: []
-    };
-
-    course.topics.push(newTopic);
-    saveCoursesToFile(courses);
-
-    res.status(201).json({ message: "Topic added", topic: newTopic });
 };
 
 // 📌 Add Question to Topic
-const addQuestionToTopic = (req, res) => {
+const addQuestionToTopic = async (req, res) => {
     const { courseName, topicId } = req.params;
     const { question, options, answer } = req.body;
 
-    const courses = getCoursesFromFile();
-    const course = courses.find(c => c.name.toLowerCase() === courseName.toLowerCase());
+    try {
+        const course = await Course.findOne({ name: new RegExp(`^${courseName}$`, 'i') });
 
-    if (!course) {
-        return res.status(404).json({ message: "Course not found" });
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        const topic = course.topics.find(t => t.id === parseInt(topicId));
+        if (!topic) {
+            return res.status(404).json({ message: "Topic not found" });
+        }
+
+        const existingQuestion = topic.questions.find(
+            (q) => q.question.toLowerCase() === question.toLowerCase()
+        );
+
+        if (existingQuestion) {
+            return res.status(409).json({ message: "This question already exists in this topic" });
+        }
+
+        const newQuestion = {
+            id: Date.now(),
+            question,
+            options,
+            answer
+        };
+
+        topic.questions.push(newQuestion);
+        await course.save();
+
+        res.status(201).json({ message: "Question added", question: newQuestion });
+    } catch (error) {
+        console.error("Error adding question:", error);
+        res.status(500).json({ message: "Failed to add question" });
     }
-
-    const topic = course.topics.find(t => t.id === parseInt(topicId));
-    if (!topic) {
-        return res.status(404).json({ message: "Topic not found" });
-    }
-
-    // 🔍 Check if the question already exists in the topic (case-insensitive)
-    const existingQuestion = topic.questions.find(
-        (q) => q.question.toLowerCase() === question.toLowerCase()
-    );
-
-    if (existingQuestion) {
-        return res.status(409).json({ message: "This question already exists in this topic" });
-    }
-
-    const newQuestion = {
-        id: Date.now(),
-        question,
-        options,
-        answer
-    };
-
-    topic.questions.push(newQuestion);
-    saveCoursesToFile(courses);
-
-    res.status(201).json({ message: "Question added", question: newQuestion });
 };
 
-
 // 📌 Update Course Name
-const updateCourseName = (req, res) => {
+const updateCourseName = async (req, res) => {
     const { courseId } = req.params;
     const { name } = req.body;
 
@@ -186,29 +168,29 @@ const updateCourseName = (req, res) => {
         return res.status(400).json({ message: "Course name is required" });
     }
 
-    const courses = getCoursesFromFile();
-    const course = courses.find((c) => c.id === parseInt(courseId));
+    try {
+        const course = await Course.findOne({ id: parseInt(courseId) });
 
-    if (!course) {
-        return res.status(404).json({ message: "Course not found" });
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        if (course.name.toLowerCase() === name.toLowerCase()) {
+            return res.status(400).json({ message: "The new course name is the same as the current name" });
+        }
+
+        course.name = name;
+        await course.save();
+
+        res.json({ message: "Course name updated successfully", course });
+    } catch (error) {
+        console.error("Error updating course name:", error);
+        res.status(500).json({ message: "Failed to update course name" });
     }
-
-    // Check if the new name is the same as the current one
-    if (course.name.toLowerCase() === name.toLowerCase()) {
-        return res.status(400).json({ message: "The new course name is the same as the current name" });
-    }
-
-    // Update course name
-    course.name = name;
-    saveCoursesToFile(courses);
-
-    res.json({ message: "Course name updated successfully", course });
 };
 
-
 // 📌 Update Topic Name
-// 📌 Update Topic Name
-const updateTopicName = (req, res) => {
+const updateTopicName = async (req, res) => {
     const { courseName, topicId } = req.params;
     const { name } = req.body;
 
@@ -216,34 +198,35 @@ const updateTopicName = (req, res) => {
         return res.status(400).json({ message: "Topic name is required" });
     }
 
-    const courses = getCoursesFromFile();
-    const course = courses.find(c => c.name.toLowerCase() === courseName.toLowerCase());
+    try {
+        const course = await Course.findOne({ name: new RegExp(`^${courseName}$`, 'i') });
 
-    if (!course) {
-        return res.status(404).json({ message: "Course not found" });
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        const topic = course.topics.find(t => t.id === parseInt(topicId));
+
+        if (!topic) {
+            return res.status(404).json({ message: "Topic not found" });
+        }
+
+        if (topic.name.toLowerCase() === name.toLowerCase()) {
+            return res.status(400).json({ message: "The new topic name is the same as the current name" });
+        }
+
+        topic.name = name;
+        await course.save();
+
+        res.json({ message: "Topic name updated successfully", topic });
+    } catch (error) {
+        console.error("Error updating topic name:", error);
+        res.status(500).json({ message: "Failed to update topic name" });
     }
-
-    const topic = course.topics.find(t => t.id === parseInt(topicId));
-
-    if (!topic) {
-        return res.status(404).json({ message: "Topic not found" });
-    }
-
-    // Check if the new name is the same as the current one
-    if (topic.name.toLowerCase() === name.toLowerCase()) {
-        return res.status(400).json({ message: "The new topic name is the same as the current name" });
-    }
-
-    // Update topic name
-    topic.name = name;
-    saveCoursesToFile(courses);
-
-    res.json({ message: "Topic name updated successfully", topic });
 };
 
-
 // 📌 Update Question Content
-const updateQuestion = (req, res) => {
+const updateQuestion = async (req, res) => {
     const { courseName, topicId, questionId } = req.params;
     const { question, options, answer } = req.body;
 
@@ -251,41 +234,42 @@ const updateQuestion = (req, res) => {
         return res.status(400).json({ message: "Question, options, and answer are required" });
     }
 
-    const courses = getCoursesFromFile();
-    const course = courses.find(c => c.name.toLowerCase() === courseName.toLowerCase());
+    try {
+        const course = await Course.findOne({ name: new RegExp(`^${courseName}$`, 'i') });
 
-    if (!course) {
-        return res.status(404).json({ message: "Course not found" });
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        const topic = course.topics.find(t => t.id === parseInt(topicId));
+        if (!topic) {
+            return res.status(404).json({ message: "Topic not found" });
+        }
+
+        const questionToUpdate = topic.questions.find(q => q.id === parseInt(questionId));
+
+        if (!questionToUpdate) {
+            return res.status(404).json({ message: "Question not found" });
+        }
+
+        if (questionToUpdate.question.toLowerCase() === question.toLowerCase() &&
+            JSON.stringify(questionToUpdate.options) === JSON.stringify(options) &&
+            questionToUpdate.answer.toLowerCase() === answer.toLowerCase()) {
+            return res.status(400).json({ message: "The new question, options, and answer are the same as the current ones" });
+        }
+
+        questionToUpdate.question = question;
+        questionToUpdate.options = options;
+        questionToUpdate.answer = answer;
+
+        await course.save();
+
+        res.json({ message: "Question updated successfully", question: questionToUpdate });
+    } catch (error) {
+        console.error("Error updating question:", error);
+        res.status(500).json({ message: "Failed to update question" });
     }
-
-    const topic = course.topics.find(t => t.id === parseInt(topicId));
-    if (!topic) {
-        return res.status(404).json({ message: "Topic not found" });
-    }
-
-    const questionToUpdate = topic.questions.find(q => q.id === parseInt(questionId));
-
-    if (!questionToUpdate) {
-        return res.status(404).json({ message: "Question not found" });
-    }
-
-    // Check if the updated question is the same as the current one
-    if (questionToUpdate.question.toLowerCase() === question.toLowerCase() && 
-        JSON.stringify(questionToUpdate.options) === JSON.stringify(options) && 
-        questionToUpdate.answer.toLowerCase() === answer.toLowerCase()) {
-        return res.status(400).json({ message: "The new question, options, and answer are the same as the current ones" });
-    }
-
-    // Update question
-    questionToUpdate.question = question;
-    questionToUpdate.options = options;
-    questionToUpdate.answer = answer;
-
-    saveCoursesToFile(courses);
-
-    res.json({ message: "Question updated successfully", question: questionToUpdate });
 };
-
 
 module.exports = {
     getAllCourses,

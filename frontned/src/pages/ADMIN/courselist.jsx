@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../services/api";
 import Sidebar from '../../components/Sidebar';
 import { FaBook, FaPlus, FaEdit, FaRegFileAlt } from 'react-icons/fa'; // Importing icons
 import './courselist.css';
@@ -21,7 +22,7 @@ const CourseList = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/courses");
+      const res = await axios.get(`${API_BASE_URL}/api/courses`);
       setCourses(res.data);
     } catch (error) {
       console.error("Error fetching courses", error);
@@ -36,7 +37,7 @@ const CourseList = () => {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5000/api/courses/addcourse", {
+      const res = await axios.post(`${API_BASE_URL}/api/courses/addcourse`, {
         name: newCourseName,
       });
 
@@ -68,7 +69,7 @@ const CourseList = () => {
     }
 
     try {
-      const response = await axios.put(`http://localhost:5000/api/courses/updatecourse/${courseId}`, {
+      const response = await axios.put(`${API_BASE_URL}/api/courses/updatecourse/${courseId}`, {
         name: editingCourseName,
       });
 

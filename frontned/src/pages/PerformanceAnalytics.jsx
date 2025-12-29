@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"; // Import useState and useEffect
 import axios from "axios"; // Import axios
+import { API_BASE_URL } from "../services/api";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar2 from "../components/Sidebar-2"; // Make sure Sidebar2 is correctly imported
@@ -23,7 +24,7 @@ const PerformanceAnalytics = () => {
         return;
       }
 
-      const response = await axios.get(`http://localhost:5000/api/user/${userId}/analytics`, {
+      const response = await axios.get(`${API_BASE_URL}/api/user/${userId}/analytics`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -64,10 +65,10 @@ const PerformanceAnalytics = () => {
       {/* Sidebar */}
 
       {/* Analytics Main Section */}
-      
+
       {/* <h2 className="analytics-title">📊 Performance Analytics</h2> */}
       <div className="analytics-container">
-      <h2 className="analytics-title">📊 Performance Analytics</h2>
+        <h2 className="analytics-title">📊 Performance Analytics</h2>
         <p className="analytics-subtitle">
           Track your quiz progress and identify areas to improve.
         </p>
