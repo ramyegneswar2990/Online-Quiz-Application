@@ -7,15 +7,16 @@ const path = require("path");
 const helmet = require("helmet");
 const compression = require("compression");
 
-if (process.env.NODE_ENV !== 'production') {
-    dotenv.config({ path: path.join(__dirname, "../.env") });
-}
+// Load environment variables (Vercel will override these)
+dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to database once
-connectDB().catch(err => console.error("Initial DB connection failed:", err));
+// Connect to database (non-blocking)
+connectDB()
+    .then(() => console.log("Database connected successfully"))
+    .catch(err => console.error("Database connection failed:", err.message));
 
 // CORS configuration
 const allowedOrigins = process.env.CORS_WHITELIST ? process.env.CORS_WHITELIST.split(',') : [];
