@@ -14,21 +14,60 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// Mongoose Connection Pattern for Serverless
+let cachedPromise = null;
+
+const connectToDatabase = async () => {
+    if (!process.env.MONGO_URI) {
+        throw new Error("MONGO_URI is missing in environment variables");
+    }
+
+    if (mongoose.connection.readyState === 1) {
+        return mongoose.connection;
+    }
+
+    if (!cachedPromise) {
+        cachedPromise = mongoose.connect(process.env.MONGO_URI, {
+            serverSelectionTimeoutMS: 5000,
+            bufferCommands: false
+        }).then((mongoose) => {
+            console.log("MongoDB connected successfully");
+            return mongoose;
+        }).catch((err) => {
+            console.error("MongoDB connection error:", err);
+            cachedPromise = null;
+            throw err;
+        });
+    }
+
+    return cachedPromise;
+};
+
+// Middleware: Ensure DB is connected for all API routes
+app.use(async (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+        try {
+            await connectToDatabase();
+        } catch (error) {
+            console.error("Critical DB Connection Failure:", error);
+        }
+    }
+    next();
+});
+
 // Test endpoint
 app.get("/api/ping", (req, res) => {
     res.json({
         status: "ok",
         timestamp: new Date().toISOString(),
         database: {
-            status: dbConnectionStatus,
-            error: dbConnectionError,
+            status: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
             readyState: mongoose.connection.readyState,
             readyStateText: ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState]
         },
         env: {
             hasMongoUri: !!process.env.MONGO_URI,
             mongoUriPreview: process.env.MONGO_URI ? `${process.env.MONGO_URI.substring(0, 20)}...` : 'not set',
-            hasJwtSecret: !!process.env.JWT_SECRET,
             nodeEnv: process.env.NODE_ENV
         }
     });
@@ -47,38 +86,12 @@ try {
     console.error("Error loading routes:", error);
 }
 
-// Connect to database (non-blocking)
-let dbConnectionStatus = "not attempted";
-let dbConnectionError = null;
-
-if (process.env.MONGO_URI) {
-    console.log("Attempting MongoDB connection...");
-    mongoose.connect(process.env.MONGO_URI, {
-        serverSelectionTimeoutMS: 5000,
-        bufferCommands: false, // Disable buffering
-    })
-        .then(() => {
-            dbConnectionStatus = "connected";
-            console.log("MongoDB connected successfully");
-        })
-        .catch(err => {
-            dbConnectionStatus = "failed";
-            dbConnectionError = err.message;
-            console.error("MongoDB connection error:", err.message);
-        });
-} else {
-    dbConnectionStatus = "no URI provided";
-    console.error("MONGO_URI not found in environment variables");
-}
-
 // Global Error Handler
 app.use((err, req, res, next) => {
     console.error("Error:", err);
     res.status(500).json({
         success: false,
-        message: err.message || "Internal Server Error",
-        dbStatus: dbConnectionStatus,
-        dbError: dbConnectionError
+        message: err.message || "Internal Server Error"
     });
 });
 
