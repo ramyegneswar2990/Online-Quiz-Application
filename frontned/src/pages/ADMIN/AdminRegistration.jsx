@@ -29,9 +29,14 @@ const AdminRegistration = () => {
         alert("Registration failed: " + (response.data?.message || "Unknown error"));
       }
     } catch (error) {
-      const backendMessage = error.response?.data?.message || "Registration failed";
-      console.error("Registration failed:", backendMessage);
-      alert(backendMessage);
+      console.error("Registration full error object:", error);
+      const status = error.response?.status;
+      const data = error.response?.data;
+      const backendMessage = data?.message || error.message || "Registration failed";
+      const detailedError = data?.error || "No additional info";
+      
+      console.error("Registration failed:", { status, data, backendMessage });
+      alert(`Status: ${status}\nMessage: ${backendMessage}\nDetail: ${detailedError}`);
     }
   };
 

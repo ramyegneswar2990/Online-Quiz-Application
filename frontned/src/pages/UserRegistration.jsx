@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { registerUser } from "../services/api";
-import { useNavigate ,Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./UserRegistration.css";
 
 const UserRegistration = () => {
@@ -14,11 +14,11 @@ const UserRegistration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await registerUser({ 
-                name: formData.name, 
-                email: formData.email, 
-                password: formData.password, 
-                role: "user" 
+            const response = await registerUser({
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+                role: "user"
             });
             console.log(response.data);
 
@@ -30,31 +30,37 @@ const UserRegistration = () => {
                 alert("Registration failed: " + (response.data?.message || "Unknown error"));
             }
         } catch (error) {
-            console.error("Registration failed", error);
-            alert("Registration failed: " + (error.response?.data?.message || "Network error"));
+            console.error("Registration full error object:", error);
+            const status = error.response?.status;
+            const data = error.response?.data;
+            const backendMessage = data?.message || error.message || "Registration failed";
+            const detailedError = data?.error || "No additional info";
+
+            console.error("Registration failed:", { status, data, backendMessage });
+            alert(`Status: ${status}\nMessage: ${backendMessage}\nDetail: ${detailedError}`);
         }
     };
 
     return (
         <div className="user-register-container">
-            <div className ="user-registration-box">
-            <h2>User Registration</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="input-group">
-                    <label>Name:</label>
-                    <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-                </div>
-                <div className="input-group">
-                    <label>Email:</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-                </div>
-                <div className="input-group">
-                    <label>Password:</label>
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-                </div>
-                <button type="submit" className="submit-btn">Register</button>
-            </form>
-            <p className="switch-auth">Already have an account? <Link to = "/Userlogin">Login</Link></p>
+            <div className="user-registration-box">
+                <h2>User Registration</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <label>Name:</label>
+                        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+                    </div>
+                    <div className="input-group">
+                        <label>Email:</label>
+                        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                    </div>
+                    <div className="input-group">
+                        <label>Password:</label>
+                        <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                    </div>
+                    <button type="submit" className="submit-btn">Register</button>
+                </form>
+                <p className="switch-auth">Already have an account? <Link to="/Userlogin">Login</Link></p>
             </div>
         </div>
     );
