@@ -14,15 +14,8 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Database Connection Middleware (Ensuring connection for serverless)
-app.use(async (req, res, next) => {
-    try {
-        await connectDB();
-        next();
-    } catch (error) {
-        res.status(500).json({ success: false, message: "Database connection failed", error: error.message });
-    }
-});
+// Connect to database once
+connectDB().catch(err => console.error("Initial DB connection failed:", err));
 
 // CORS configuration
 const allowedOrigins = process.env.CORS_WHITELIST ? process.env.CORS_WHITELIST.split(',') : [];
