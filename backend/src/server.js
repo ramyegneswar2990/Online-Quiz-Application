@@ -44,16 +44,52 @@ app.use(helmet({
 app.use(compression());
 app.use(express.json());
 
-// Health Check
-app.get("/api/ping", (req, res) => res.status(200).json({
-    status: "ok",
-    db: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-    env: {
-        hasMongo: !!process.env.MONGO_URI,
-        hasJwt: !!process.env.JWT_SECRET,
-        nodeEnv: process.env.NODE_ENV
+// Health Check & Diagnostics
+app.get("/api/ping", (req, res) => {
+    const diagnostics = {
+        status: "ok",
+        timestamp: new Date().toISOString(),
+        database: {
+            connected: mongoose.connection.readyState === 1,
+            readyState: mongoose.connection.readyState,
+            host: mongoose.connection.host || "not connected"
+        },
+        environment: {
+            nodeEnv: process.env.NODE_ENV,
+            hasMongoUri: !!process.env.MONGO_URI,
+            mongoUriLength: process.env.MONGO_URI?.length || 0,
+            hasJwtSecret: !!process.env.JWT_SECRET,
+            port: PORT,
+            isVercel: !!process.env.VERCEL
+        },
+        models: {
+            User: !!mongoose.models.User,
+            Admin: !!mongoose.models.Admin,
+            Course: !!mongoose.models.Course,
+            Result: !!mongoose.models.Result
+        }
+    };
+
+    res.status(200).json(diagnostics);
+});
+
+// Simple test registration endpoint
+app.post("/api/test-register", async (req, res) => {
+    try {
+        res.json({
+            success: true,
+            message: "Test endpoint working",
+            body: req.body,
+            dbConnected: mongoose.connection.readyState === 1
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message,
+            stack: error.stack
+        });
     }
-}));
+});
 
 // API Routes
 app.use("/api/courses", require("./routes/courseRoutes"));
