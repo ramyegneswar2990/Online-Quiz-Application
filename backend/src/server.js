@@ -54,7 +54,7 @@ let dbConnectionError = null;
 if (process.env.MONGO_URI) {
     console.log("Attempting MongoDB connection...");
     mongoose.connect(process.env.MONGO_URI, {
-        serverSelectionTimeoutMS: 5000,
+        serverSelectionTimeoutMS: 15000, // Increased to 15s
         socketTimeoutMS: 45000,
     })
         .then(() => {
