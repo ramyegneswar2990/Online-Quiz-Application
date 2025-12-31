@@ -19,8 +19,15 @@ app.get("/api/ping", (req, res) => {
     res.json({
         status: "ok",
         timestamp: new Date().toISOString(),
+        database: {
+            status: dbConnectionStatus,
+            error: dbConnectionError,
+            readyState: mongoose.connection.readyState,
+            readyStateText: ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState]
+        },
         env: {
             hasMongoUri: !!process.env.MONGO_URI,
+            mongoUriPreview: process.env.MONGO_URI ? `${process.env.MONGO_URI.substring(0, 20)}...` : 'not set',
             hasJwtSecret: !!process.env.JWT_SECRET,
             nodeEnv: process.env.NODE_ENV
         }
@@ -41,10 +48,27 @@ try {
 }
 
 // Connect to database (non-blocking)
+let dbConnectionStatus = "not attempted";
+let dbConnectionError = null;
+
 if (process.env.MONGO_URI) {
-    mongoose.connect(process.env.MONGO_URI)
-        .then(() => console.log("MongoDB connected"))
-        .catch(err => console.error("MongoDB connection error:", err.message));
+    console.log("Attempting MongoDB connection...");
+    mongoose.connect(process.env.MONGO_URI, {
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+    })
+        .then(() => {
+            dbConnectionStatus = "connected";
+            console.log("MongoDB connected successfully");
+        })
+        .catch(err => {
+            dbConnectionStatus = "failed";
+            dbConnectionError = err.message;
+            console.error("MongoDB connection error:", err.message);
+        });
+} else {
+    dbConnectionStatus = "no URI provided";
+    console.error("MONGO_URI not found in environment variables");
 }
 
 // Global Error Handler
@@ -52,7 +76,9 @@ app.use((err, req, res, next) => {
     console.error("Error:", err);
     res.status(500).json({
         success: false,
-        message: err.message || "Internal Server Error"
+        message: err.message || "Internal Server Error",
+        dbStatus: dbConnectionStatus,
+        dbError: dbConnectionError
     });
 });
 
